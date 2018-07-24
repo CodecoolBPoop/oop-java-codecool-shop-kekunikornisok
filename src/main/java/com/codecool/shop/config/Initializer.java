@@ -36,7 +36,7 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(kallAir);
         Supplier airAction = new Supplier("AirAction", "XXX");
         supplierDataStore.add(airAction);
-        Supplier polgarMestAir = new Supplier("PolgárMestAir", "XXX");
+        Supplier polgarMestAir = new Supplier("PolgarMestAir", "XXX");
         supplierDataStore.add(polgarMestAir);
         Supplier tejutrendszAir = new Supplier("TejutrendszAir", "XXX");
         supplierDataStore.add(tejutrendszAir);

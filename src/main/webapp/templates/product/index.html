@@ -34,15 +34,21 @@
 </div>
 
 <div class="container">
-    <div th:each="prod,iterStat :${category.name}">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+        <li th:each="categ,iterStat :${category}"><a href="index.html" th:text="${categ.getName()}">HTML</a></li>
+        </ul>
+    <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
                 <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="index.html" th:text="${prod}">HTML</a></li>
+                <li th:each="supp,iterStat :${supplier}"><a href="index.html" th:text="${supp.name}">HTML</a></li>
             </ul>
-        </div>
     </div>
+    </div>
+
 
         <div id="products" class="row list-group">
 
