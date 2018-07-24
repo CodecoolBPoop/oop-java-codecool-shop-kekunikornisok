@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="author" content="Codecool" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Codecool Shop</title>
+
+        <!-- Latest compiled and minified Jquery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+              integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+              integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>ContainAir</h1>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody th:each="product,iterStat : ${products}">
+                <tr>
+                    <th scope="row" th:text="${product.getId()}">Id</th>
+                    <td th:text="${product.getName()}">Item</td>
+                    <td>
+                        <div th:text="'Category: ' + ${product.getProductCategory().getName()}">ProductCategory</div>
+                        <div th:text="'Supplier: ' + ${product.getSupplier().getName()}">Supplier</div>
+                    </td>
+                    <td th:text="${product.getPrice()}">Price</td>
+                    <td class="d-inline-block">
+                        <div>
+                            <i class="fas fa-minus"></i>
+                            <span th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td th:text="'Total items: ' + ${products.size()}"></td>
+                    <td th:text="'Total price: ' + ${shopping_cart.getTotalPrice()}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:replace="footer.html :: copy"></div>
+    </body>
+</html>
