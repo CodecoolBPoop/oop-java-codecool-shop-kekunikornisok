@@ -54,9 +54,9 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(summAir);
         ProductCategory hypAir = new ProductCategory("HypAir", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(hypAir);
-        ProductCategory meditAirien = new ProductCategory("MeditAirien", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        ProductCategory meditAirien = new ProductCategory("MeditAirrane", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(meditAirien);
-        ProductCategory countAir = new ProductCategory("CountAir", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        ProductCategory countAir = new ProductCategory("CountrAir", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(countAir);
         ProductCategory wintAir = new ProductCategory("WintAir", "Air", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         productCategoryDataStore.add(wintAir);
