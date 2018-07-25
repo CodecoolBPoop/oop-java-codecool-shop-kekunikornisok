@@ -4,7 +4,6 @@ import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.Product;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
