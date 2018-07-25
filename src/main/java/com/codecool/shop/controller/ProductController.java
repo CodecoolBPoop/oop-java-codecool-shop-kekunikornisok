@@ -43,9 +43,6 @@ public class ProductController extends HttpServlet {
         String categoryIdFromUrl = req.getParameter("category");
         String supplierIdFromUrl = req.getParameter("supplier");
 
-       // int categoryIdFromUrl = Integer.parseInt(catIdFromUrl);
-       // int supplierIdFromUrl = Integer.parseInt(suppIdFromUrl);
-
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
