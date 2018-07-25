@@ -49,10 +49,6 @@ public class ProductController extends HttpServlet {
         context.setVariable("supplier", supplierDataStore.getAll());
         renderThePage(categoryIdFromUrl,supplierIdFromUrl,context);
 
-        System.out.println(categoryIdFromUrl);
-        System.out.println(supplierIdFromUrl);
-
-
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -80,8 +76,6 @@ public class ProductController extends HttpServlet {
         renderThePage(categoryIdFromUrl,supplierIdFromUrl,context);
 
         engine.process("product/index.html", context, resp.getWriter());
-        System.out.println(categoryIdFromUrl);
-        System.out.println(supplierIdFromUrl);
 
     }
 
