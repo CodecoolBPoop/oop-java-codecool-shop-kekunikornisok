@@ -1,7 +1,7 @@
 package com.codecool.shop.dao;
 
 import com.codecool.shop.model.*;
-import java.util.List;
+import java.util.Set;
 
 public interface ShoppingCartDao {
 
@@ -9,6 +9,6 @@ public interface ShoppingCartDao {
     Product find(int id);
     void remove(int id);
 
-    List<Product> getAll();
+    Set<Product> getAll();
 
 }
