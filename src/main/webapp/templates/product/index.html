@@ -40,12 +40,13 @@
         <ul class="dropdown-menu">
         <li th:each="categ,iterStat :${category}"><a href="index.html"  th:text="${categ.getName()}">HTML</a></li>
         </ul>
+        <div class="pull-right">
+            <form action="/shopping-cart" method="get">
+                <button type="submit">Basket</button>
+            </form>
+        </div>
     </div>
-    <div class="pull-right">
-        <form action="/shopping-cart" method="get">
-            <button type="submit">Basket</button>
-        </form>
-    </div>
+
     <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
         <span class="caret"></span></button>
