@@ -26,6 +26,7 @@ import java.util.Map;
 public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
     private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -47,6 +48,7 @@ public class ProductController extends HttpServlet {
         engine.process("product/index.html", context, resp.getWriter());
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         for (Product item : productDataStore.getAll()) {
