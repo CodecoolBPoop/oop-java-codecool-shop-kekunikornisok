@@ -40,12 +40,28 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
+
+        String categoryIdFromUrl = req.getParameter("category");
+        String supplierIdFromUrl = req.getParameter("supplier");
+
+       // int categoryIdFromUrl = Integer.parseInt(catIdFromUrl);
+       // int supplierIdFromUrl = Integer.parseInt(suppIdFromUrl);
+
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("products", productDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
 
+        if(categoryIdFromUrl != null){
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(categoryIdFromUrl))));
+        } else if (supplierIdFromUrl != null){
+            context.setVariable("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierIdFromUrl))));
+        }
+        else {
+            context.setVariable("products", productDataStore.getAll());
+        }
+
         engine.process("product/index.html", context, resp.getWriter());
+
     }
 
     @Override
