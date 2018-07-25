@@ -2,10 +2,12 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -23,6 +25,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -49,10 +52,10 @@ public class ProductController extends HttpServlet {
         for (Product item : productDataStore.getAll()) {
             String id = String.valueOf(item.getId());
             if (id.equals(request.getParameter("product"))) {
-                //ItemStore.add(item);
-                System.out.println("ott van");
+                shoppingCart.add(item);
             }
-            response.sendRedirect(request.getContextPath() + "/");
         }
+        response.sendRedirect(request.getContextPath() + "/");
+
     }
 }
