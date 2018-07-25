@@ -40,20 +40,20 @@
         <ul class="dropdown-menu">
         <li th:each="categ,iterStat :${category}"><a href="index.html"  th:text="${categ.getName()}">HTML</a></li>
         </ul>
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li th:each="supp,iterStat :${supplier}"><a href="index.html" th:text="${supp.name}">HTML</a></li>
-            </ul>
-        </div>
-
     </div>
     <div class="pull-right">
         <form action="/shopping-cart" method="get">
             <button type="submit">Basket</button>
         </form>
     </div>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li th:each="supp,iterStat :${supplier}"><a href="index.html" th:text="${supp.name}">HTML</a></li>
+        </ul>
+    </div>
+
         <div id="products" class="row list-group">
 
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
