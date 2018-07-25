@@ -64,3 +64,8 @@
 .brand {
     color: #e0e0e0;
 }
+
+.list-group-image {
+    width: 200px;
+    height: 300px;
+}
