@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody th:each="product,iterStat : ${products}">
-                    <tr>
+                    <tr th:id="'table_row_' + ${product.getId()}">
                         <th scope="row" th:text="${product.getId()}">Id</th>
                         <td th:text="${product.getName()}">Item</td>
                         <td>
@@ -30,9 +30,9 @@
                         <td th:text="${product.getPrice()}">Price</td>
                         <td class="d-inline-block">
                             <div>
-                                <i class="fas fa-minus"></i>
-                                <span th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-minus" th:id="${product.getId()}"></i>
+                                <span th:id="'quantity_' + ${product.getId()}" th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
+                                <i class="fas fa-plus" th:id="${product.getId()}"></i>
                             </div>
                         </td>
                     </tr>
@@ -40,9 +40,9 @@
                 <tbody>
                     <tr>
                         <td></td>
-                        <td th:text="'Total items: ' + ${products.size()}"></td>
+                        <td id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
                         <td></td>
-                        <td th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
+                        <td id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
                         <td></td>
                     </tr>
                 </tbody>
