@@ -3,8 +3,8 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.Product;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
@@ -42,8 +42,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
-    public List<Product> getAll() {
-        return productsInCart;
+    public Set<Product> getAll() {
+        return productsInCart.stream().collect(Collectors.toSet());
     }
 
     public float getTotalPrice() {
