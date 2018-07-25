@@ -42,8 +42,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
-    public Set<Product> getAll() {
-        return productsInCart.stream().collect(Collectors.toSet());
+    public LinkedHashSet<Product> getAll() {
+        return new LinkedHashSet<>(productsInCart);
     }
 
     public float getTotalPrice() {
