@@ -26,8 +26,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
     @Override
     public void add(Product product) {
-        productsInCart.add(product);
         totalPrice += product.getDefaultPrice();
+        productsInCart.add(product);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
     @Override
     public void remove(int id) {
-        productsInCart.remove(find(id));
         totalPrice -= find(id).getDefaultPrice();
+        productsInCart.remove(find(id));
     }
 
     @Override
@@ -46,11 +46,15 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
         return new LinkedHashSet<>(productsInCart);
     }
 
+    public int getSize() {
+        return productsInCart.size();
+    }
+
     public float getTotalPrice() {
         return totalPrice;
     }
 
-    public int getQuantityById(int id) {
+    public Integer getQuantityById(int id) {
         return (int) productsInCart.stream().filter(t -> t.getId() == id).count();
     }
 

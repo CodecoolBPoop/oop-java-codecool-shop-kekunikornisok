@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody th:each="product,iterStat : ${products}">
-                    <tr>
+                    <tr th:id="'table_row_' + ${product.getId()}">
                         <th scope="row" th:text="${product.getId()}">Id</th>
                         <td th:text="${product.getName()}">Item</td>
                         <td>
@@ -40,7 +40,7 @@
                 <tbody>
                     <tr>
                         <td></td>
-                        <td th:text="'Total items: ' + ${products.size()}"></td>
+                        <td id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
                         <td></td>
                         <td id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
                         <td></td>

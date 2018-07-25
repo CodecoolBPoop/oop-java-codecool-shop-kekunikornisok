@@ -27,8 +27,8 @@ public class AjaxController extends HttpServlet {
             shoppingCart.add(shoppingCart.find(productId));
         }
 
-        String newQuantity = Integer.toString(shoppingCart.getQuantityById(productId));
-        String newTotalItems = Integer.toString(shoppingCart.getAll().size());
+        String newQuantity = (shoppingCart.getQuantityById(productId) != null) ? Integer.toString(shoppingCart.getQuantityById(productId)) : "0";
+        String newTotalItems = Integer.toString(shoppingCart.getSize());
         String newTotalPrice = Float.toString(Math.round(shoppingCart.getTotalPrice() * 100) / 100);
 
         newData.put("productId", Integer.toString(productId));

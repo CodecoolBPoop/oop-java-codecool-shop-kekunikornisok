@@ -20,13 +20,6 @@ let dom = {
                 dom.increaseProductQuantity(product.id);
             })
         }
-
-        // $(".fa-minus").on("click", function () {
-        //     dom.decreaseProductQuantity($("#products"));
-        // });
-        // $(".fa-plus").on("click", function () {
-        //     dom.increaseProductQuantity();
-        // });
     },
     
     decreaseProductQuantity: function (productId) {
@@ -38,7 +31,13 @@ let dom = {
     },
     
     displayNewValues: function (newValues) {
-        document.getElementById("quantity_" + newValues["productId"]).innerText = newValues["newQuantity"];
+        if (newValues["newQuantity"] !== "0") {
+            document.getElementById("quantity_" + newValues["productId"]).innerText = newValues["newQuantity"];
+        } else {
+            document.getElementById("table_row_" + newValues["productId"]).remove();
+        }
+
+        document.getElementById("total_items").innerText = "Total items: " + newValues["newTotalItems"];
         document.getElementById("total_price").innerText = "Total price: " + newValues["newTotalPrice"] + " USD";
     }
 };
