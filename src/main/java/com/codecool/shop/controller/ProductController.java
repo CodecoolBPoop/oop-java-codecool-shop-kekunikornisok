@@ -26,11 +26,12 @@ import java.util.Map;
 public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
     private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+    private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -46,29 +47,52 @@ public class ProductController extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
+        renderThePage(categoryIdFromUrl,supplierIdFromUrl,context);
 
-        if(categoryIdFromUrl != null){
-            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(categoryIdFromUrl))));
-        } else if (supplierIdFromUrl != null){
-            context.setVariable("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierIdFromUrl))));
-        }
-        else {
-            context.setVariable("products", productDataStore.getAll());
-        }
+        System.out.println(categoryIdFromUrl);
+        System.out.println(supplierIdFromUrl);
+
 
         engine.process("product/index.html", context, resp.getWriter());
-
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         for (Product item : productDataStore.getAll()) {
             String id = String.valueOf(item.getId());
-            if (id.equals(request.getParameter("product"))) {
+            if (id.equals(req.getParameter("product"))) {
                 shoppingCart.add(item);
             }
         }
-        response.sendRedirect(request.getContextPath() + "/");
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        String categoryIdFromUrl = req.getParameter("category");
+        String supplierIdFromUrl = req.getParameter("supplier");
+
+        context.setVariable("recipient", "World");
+        context.setVariable("category", productCategoryDataStore.getAll());
+        context.setVariable("supplier", supplierDataStore.getAll());
+        renderThePage(categoryIdFromUrl,supplierIdFromUrl,context);
+
+        engine.process("product/index.html", context, resp.getWriter());
+        System.out.println(categoryIdFromUrl);
+        System.out.println(supplierIdFromUrl);
+
+    }
+
+
+private void renderThePage(String categoryIdFromUrl, String supplierIdFromUrl, WebContext context){
+    if(categoryIdFromUrl != null){
+        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(categoryIdFromUrl))));
+    } else if (supplierIdFromUrl != null){
+        context.setVariable("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierIdFromUrl))));
+    }
+    else {
+        context.setVariable("products", productDataStore.getAll());
+    }
     }
 }

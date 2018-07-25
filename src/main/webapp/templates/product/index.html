@@ -11,31 +11,10 @@
     <!--</div>-->
 
 <div class="container">
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category
-            <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-        <li th:each="categ,iterStat :${category}"><a th:href="@{'/?category=' + ${categ.getId()}}"
-            th:text="${categ.getName()}">HTML</a></li>
-        </ul>
-        <div class="pull-right">
-            <form action="/shopping-cart" method="get">
-                <button type="submit">Basket</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li th:each="supp,iterStat :${supplier}"><a th:href="@{'/?supplier=' + ${supp.getId()}}" th:text="${supp.name}">HTML</a></li>
-        </ul>
-    </div>
 
         <div id="products" class="row">
 
-        <div class="item col-xs-12 col-md-6" th:each="prod,iterStat : ${products}">
+        <div class="item col-xs-6 col-md-3" th:each="prod,iterStat : ${products}">
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/jar' + ${prod.id} + '.png'" alt="" />
                 <div class="caption">
@@ -46,7 +25,7 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <form action="/" method ="post">
+                            <form method ="post">
                             <button class="btn btn-success" type = "submit" th:value="${prod.getId()}" name = "product">Add to cart</button>
                             </form>
                         </div>
