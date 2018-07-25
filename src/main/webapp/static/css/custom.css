@@ -64,3 +64,17 @@
 .brand {
     color: #e0e0e0;
 }
+
+.list-group-image {
+    width: 200px;
+    height: 300px;
+}
+
+.fa-shopping-cart {
+    font-size: 50px;
+}
+
+.list-group-item-text {
+    width: 200px;
+    height: 150px;
+}

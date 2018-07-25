@@ -62,7 +62,7 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(wintAir);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Blaha", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", urbanAir, kallAir));
+        productDataStore.add(new Product("Blaha", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical.", urbanAir, kallAir));
         productDataStore.add(new Product("NewYorkAir", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", urbanAir, tripAir));
         productDataStore.add(new Product("Avonley Road 23", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", urbanAir, thimAir));
         productDataStore.add(new Product("CzigarettAir", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", urbanAir, koshAir));
