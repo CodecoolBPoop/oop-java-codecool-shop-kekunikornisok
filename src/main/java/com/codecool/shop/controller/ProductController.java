@@ -64,9 +64,12 @@ public class ProductController extends HttpServlet {
         ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
         String categoryIdFromUrl = req.getParameter("category");
         String supplierIdFromUrl = req.getParameter("supplier");
+        String categoryNameFromUrl = req.getParameter("value");
+
 
         addProductToShoppingCart(req, productDataStore, shoppingCart);
 
+        getCategoryImg(categoryNameFromUrl, context);
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
