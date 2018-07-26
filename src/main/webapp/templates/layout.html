@@ -36,23 +36,25 @@
             <div class="row">
                 <a class="navbar-brand" href="/">
                     <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top ml-2" alt="">
-                    <span class="brand">IntAirNet</span>
+                    <span class="brand">intAirnet</span>
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Category
+                    <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Category
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li th:each="categ,iterStat :${category}"><a th:href="@{'/?category=' + ${categ.getId()} + '&value=' + ${categ.getName()}}"
-                                                                     th:text="${categ.getName()}">HTML</a></li>
+                        <li th:each="categ,iterStat :${category}">
+                            <a class="dropdown-item" th:href="@{'/?category=' + ${categ.getId()} + '&value=' + ${categ.getName()}}" th:text="${categ.getName()}">HTML</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Supplier
+                    <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Supplier
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li th:each="supp,iterStat :${supplier}"><a th:href="@{'/?supplier=' + ${supp.getId()}}"
-                                                                    th:text="${supp.name}">HTML</a></li>
+                        <li th:each="supp,iterStat :${supplier}">
+                            <a class="dropdown-item" th:href="@{'/?supplier=' + ${supp.getId()}}" th:text="${supp.name}">HTML</a>
+                        </li>
                     </ul>
                 </div>
             </div>

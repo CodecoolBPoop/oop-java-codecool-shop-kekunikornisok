@@ -19,7 +19,10 @@
                 </thead>
                 <tbody th:each="product,iterStat : ${products}">
                     <tr th:id="'table_row_' + ${product.getId()}">
-                        <th scope="row" th:text="${product.getId()}">Id</th>
+                        <th scope="row">
+                            <img class="cart_image group list-group-image" src="http://placehold.it/400x250/000/fff"
+                                 th:attr="src='/static/img/jar' + ${product.id} + '.png'" alt="" />
+                        </th>
                         <td th:text="${product.getName()}">Item</td>
                         <td>
                             <div th:text="'Category: ' + ${product.getProductCategory().getName()}">ProductCategory</div>
@@ -54,7 +57,7 @@
                 </thead>
             </table>
             <div th:if="${products.size() != 0}" class="float-right shopping-cart-yes">
-                <button class="btn btn-primary btn-outline-primary" data-toggle="collapse" href="#checkout"
+                <button class="btn btn-info btn-outline-info" data-toggle="collapse" href="#checkout"
                         role="button" aria-expanded="false" aria-controls="checkout">Proceed to checkout
                 </button>
             </div>
@@ -180,7 +183,7 @@
                         </div>
                         <hr class="mb-4">
                     </form>
-                    <button class="btn btn-primary btn-outline-primary" data-toggle="collapse" href="#payment"
+                    <button class="btn btn-info btn-outline-info" data-toggle="collapse" href="#payment"
                             role="button" aria-expanded="false" aria-controls="payment">Continue to payment
                     </button>
                 </div>
@@ -233,7 +236,7 @@
                             </div>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-outline-primary" type="submit">Pay</button>
+                        <button class="btn btn-info btn-outline-info" type="submit">Pay</button>
                     </form>
                 </div>
             </div>
