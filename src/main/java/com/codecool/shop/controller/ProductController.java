@@ -10,6 +10,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -25,7 +26,6 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
     private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
@@ -43,7 +43,10 @@ public class ProductController extends HttpServlet {
 
         String categoryIdFromUrl = req.getParameter("category");
         String supplierIdFromUrl = req.getParameter("supplier");
+        String categoryNameFromUrl = req.getParameter("value");
 
+
+        getCategoryImg(categoryNameFromUrl, context);
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
@@ -54,21 +57,15 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        for (Product item : productDataStore.getAll()) {
-            String id = String.valueOf(item.getId());
-            if (id.equals(req.getParameter("product"))) {
-                shoppingCart.add(item);
-            }
-        }
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-
+        ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
         String categoryIdFromUrl = req.getParameter("category");
         String supplierIdFromUrl = req.getParameter("supplier");
+
+        addProductToShoppingCart(req, productDataStore, shoppingCart);
 
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.getAll());
@@ -80,14 +77,33 @@ public class ProductController extends HttpServlet {
     }
 
 
-private void renderThePage(String categoryIdFromUrl, String supplierIdFromUrl, WebContext context){
-    if(categoryIdFromUrl != null){
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(categoryIdFromUrl))));
-    } else if (supplierIdFromUrl != null){
-        context.setVariable("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierIdFromUrl))));
+    private void renderThePage(String categoryIdFromUrl, String supplierIdFromUrl, WebContext context) {
+        if (categoryIdFromUrl != null) {
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(categoryIdFromUrl))));
+        } else if (supplierIdFromUrl != null) {
+            context.setVariable("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierIdFromUrl))));
+        } else {
+            context.setVariable("products", productDataStore.getAll());
+        }
     }
-    else {
-        context.setVariable("products", productDataStore.getAll());
+
+    private void getCategoryImg (String categoryNameFromUrl, WebContext context){
+        for (Product name : productDataStore.getAll()) {
+            if (name.getProductCategory().getName().equals(categoryNameFromUrl)) {
+                context.setVariable("categoryName", name.getProductCategory().getName());
+                return;
+            }
+            else {
+                context.setVariable("categoryName", "Cloud" );
+            }
+        }
     }
+    private void addProductToShoppingCart(HttpServletRequest req, ProductDao productStore, ShoppingCartDao shoppingCart) {
+        for (Product item : productStore.getAll()) {
+            String id = String.valueOf(item.getId());
+            if (id.equals(req.getParameter("product"))) {
+                shoppingCart.add(item);
+            }
+        }
     }
 }
