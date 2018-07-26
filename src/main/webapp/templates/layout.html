@@ -42,9 +42,8 @@
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Category
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li th:each="categ,iterStat :${category}">
-                            <a class="dropdown-item" th:href="@{'/?category=' + ${categ.getId()}}" th:text="${categ.getName()}">HTML</a>
-                        </li>
+                        <li th:each="categ,iterStat :${category}"><a th:href="@{'/?category=' + ${categ.getId()} + '&value=' + ${categ.getName()}}"
+                                                                     th:text="${categ.getName()}">HTML</a></li>
                     </ul>
                 </div>
 
