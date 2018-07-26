@@ -62,20 +62,20 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(wintAir);
 
         //setting up products and printing it
-        productDataStore.add(new Product("Blaha", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical.", urbanAir, kallAir));
-        productDataStore.add(new Product("NewYorkAir", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", urbanAir, tripAir));
-        productDataStore.add(new Product("Avonley Road 23", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", urbanAir, thimAir));
-        productDataStore.add(new Product("CzigarettAir", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", urbanAir, koshAir));
-        productDataStore.add(new Product("Alpesi Heves Jeges", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", mountAir, tripAir));
-        productDataStore.add(new Product("Badacsonyi Hamvas", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", mountAir, polgarMestAir));
-        productDataStore.add(new Product("Csomolungma Csucsa", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", mountAir, airAction));
-        productDataStore.add(new Product("4-6 Potlo Summer Edt.", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", summAir, kallAir));
-        productDataStore.add(new Product("Epsilon Eridion b", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", hypAir, tejutrendszAir));
-        productDataStore.add(new Product("Osiris Limited Edt.", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", hypAir, tejutrendszAir));
-        productDataStore.add(new Product("Rub'al Hali Dry", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", meditAirien, olivAir));
-        productDataStore.add(new Product("NyariKonyha", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", countAir, scrumMastAir));
-        productDataStore.add(new Product("John Deere", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", countAir, sAiry));
-        productDataStore.add(new Product("Santa Claus Is Coming To Town", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", wintAir, airAction));
+        productDataStore.add(new Product("Blaha", 49.9f, "USD", "Egyenest Pest bugyraibol, a 2-es metro poklabol, 2017-es termes", urbanAir, kallAir));
+        productDataStore.add(new Product("NewYorkAir", 119, "USD", "A forro beton es a csajok izzadsagszaga, ez New York", urbanAir, tripAir));
+        productDataStore.add(new Product("Avonley Road 23", 99, "USD", "Ritkasag, nehezen befoghato levego, limitalt", urbanAir, thimAir));
+        productDataStore.add(new Product("CzigarettAir", 69, "USD", "Kek Camel dohany, piros Smoking cigipapir es rizlaszuro = hmm ", urbanAir, thimAir));
+        productDataStore.add(new Product("Alpesi Heves Jeges", 25, "USD", "Friss jeges, hevesen, szelesen", mountAir, tripAir));
+        productDataStore.add(new Product("Badacsonyi Hamvas", 29, "USD", "Balaton feloli, eszak-nyugati, 2016-os, diofa hordoban erlelt", mountAir, polgarMestAir));
+        productDataStore.add(new Product("Csomolungma Csucsa", 999, "USD", "10 embereletbe kerul egy ilyen levego beszerzese", mountAir, airAction));
+        productDataStore.add(new Product("4-6 Potlo Summer Edt.", 250, "USD", "Mindenki kedvence, limitalt ideig", summAir, kallAir));
+        productDataStore.add(new Product("Epsilon Eridion b", 499, "USD", "Darth Vader hozta, gyujtoi darab", hypAir, tejutrendszAir));
+        productDataStore.add(new Product("Osiris Limited Edt.", 666, "USD", "Az ordog hata mogul", hypAir, tejutrendszAir));
+        productDataStore.add(new Product("Rub'al Hali Dry", 89, "USD", "Egy palmafa mellol, 10 szem homokkal, 7 puttonyos", meditAirien, olivAir));
+        productDataStore.add(new Product("NyariKonyha", 9, "USD", "Egy kis leveskocka illata szall a levegoben, nagymama meglegyintette a kopenyet.", countAir, scrumMastAir));
+        productDataStore.add(new Product("John Deere", 50, "USD", "Az erzes amikor belepsz a faluba es erzed a szalonna gane kombot. Kezd feljonni a palinka Ye", countAir, sAiry));
+        productDataStore.add(new Product("Santa Claus Is Coming", 24, "USD", "Egynyari termek, ketszer", wintAir, airAction));
 
     }
 }
