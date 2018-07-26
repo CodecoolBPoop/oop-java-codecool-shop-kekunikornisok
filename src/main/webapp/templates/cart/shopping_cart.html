@@ -19,7 +19,7 @@
                 </thead>
                 <tbody th:each="product,iterStat : ${products}">
                     <tr th:id="'table_row_' + ${product.getId()}">
-                        <th class="text-center" scope="row">
+                        <th scope="row">
                             <img class="cart_image group list-group-image" src="http://placehold.it/400x250/000/fff"
                                  th:attr="src='/static/img/jar' + ${product.id} + '.png'" alt="" />
                         </th>
