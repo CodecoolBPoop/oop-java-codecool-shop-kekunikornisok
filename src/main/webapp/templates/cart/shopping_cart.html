@@ -7,7 +7,7 @@
         <!--</div>-->
 
         <div class="container">
-            <table th:if="${products.size() != 0}" class="table table-striped shopping-cart-yes">
+            <table th:if="${products.size() != 0}" class="table table-striped shopping-cart-yes border border-dark">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -41,11 +41,11 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
-                        <td></td>
-                        <td id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
-                        <td></td>
+                        <td class="total"></td>
+                        <td class="total" id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
+                        <td class="total"></td>
+                        <td class="total" id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
+                        <td class="total"></td>
                     </tr>
                 </tbody>
             </table>
@@ -62,7 +62,7 @@
                 </button>
             </div>
             <div class="row m-5">
-                <div class="collapse col-md-5 m-2 p-4 border" id="checkout">
+                <div class="collapse col-md-5 m-2 p-4 border border-dark" id="checkout">
                     <h4 class="mb-3">Billing address</h4>
                     <form class="needs-validation" novalidate="">
                         <div class="row">
@@ -187,7 +187,7 @@
                             role="button" aria-expanded="false" aria-controls="payment">Continue to payment
                     </button>
                 </div>
-                <div class="collapse col-md-5 m-2 p-4 border" id="payment">
+                <div class="collapse col-md-5 m-2 p-4 border border-dark" id="payment">
                     <h4 class="mb-3">Payment</h4>
                     <form>
                         <div class="d-block my-3">

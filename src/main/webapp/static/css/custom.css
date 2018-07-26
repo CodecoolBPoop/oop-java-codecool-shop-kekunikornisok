@@ -1,5 +1,7 @@
 body {
     background-color: #eeeeee;
+    color: #254e5a;
+    font-family: Garuda;
 }
 
 .glyphicon {
@@ -96,6 +98,7 @@ body {
 }
 .fa-minus, .fa-plus {
     background-color: #5bc0de;
+    color: white;
 }
 
 .fa-minus:hover, .fa-plus:hover {
@@ -110,7 +113,7 @@ body {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: red;
+    background: #e95850;
     color: white;
     text-align: center;
     font-size: 20px;
@@ -134,4 +137,13 @@ body {
 .item {
     background-color: #ffffff;
     border-radius: 5%;
+}
+
+#total_items, #total_price {
+    color: #5bc0de;
+    font-weight: bold;
+}
+
+.total {
+    background-color: #eeeeee;
 }
