@@ -16,6 +16,20 @@ import java.util.Map;
 public class AjaxController extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ShoppingCartDaoMem shoppingCart = ShoppingCartDaoMem.getInstance();
+        Map<String, String> newData = new LinkedHashMap<>();
+
+        newData.put("totalItemsInCart", Integer.toString(shoppingCart.getSize()));
+        newData.put("isVisible", Boolean.toString(shoppingCart.getSize() == 0));
+        String json = new Gson().toJson(newData);
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(json);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShoppingCartDaoMem shoppingCart = ShoppingCartDaoMem.getInstance();
         Map<String, String> newData = new LinkedHashMap<>();

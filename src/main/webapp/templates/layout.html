@@ -20,8 +20,7 @@
                 integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
                 crossorigin="anonymous" defer></script>
 
-        <script
-                src="https://code.jquery.com/jquery-3.3.1.js"
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
                 integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
                 crossorigin="anonymous" defer></script>
 
@@ -29,19 +28,18 @@
               integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
-        <script src="/static/js/dom.js" defer></script>
         <script src="/static/js/data_handler.js" defer></script>
+        <script src="/static/js/dom.js" defer></script>
     </head>
     <body>
         <nav th:fragment="copy" class="navbar navbar-light bg-dark">
-
             <div class="row">
                 <a class="navbar-brand" href="/">
-                    <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top ml-2" alt="">
                     <span class="brand">IntAirNet</span>
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Category
+                    <button class="btn btn-primary dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Category
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         <li th:each="categ,iterStat :${category}"><a th:href="@{'/?category=' + ${categ.getId()}}"
@@ -50,19 +48,20 @@
                 </div>
 
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Supplier
+                    <button class="btn btn-primary dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Supplier
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li th:each="supp,iterStat :${supplier}"><a th:href="@{'/?supplier=' + ${supp.getId()}}" th:text="${supp.name}">HTML</a></li>
+                        <li th:each="supp,iterStat :${supplier}"><a th:href="@{'/?supplier=' + ${supp.getId()}}"
+                                                                    th:text="${supp.name}">HTML</a></li>
                     </ul>
                 </div>
             </div>
-
 
             <div class="cart" align="right">
                 <form action="/shopping-cart" method="get">
                     <button class="btn btn-info btn-lg" type="submit"><i class="fas fa-shopping-cart"></i></button>
                 </form>
+                <span id="item-count" hidden></span>
             </div>
         </nav>
     </body>

@@ -1,9 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
     <div th:replace="layout.html :: copy"></div>
-
-<body>
+    <body>
         <!--<div class="jumbotron text-center">-->
             <!--<h1>ContainAir</h1>-->
         <!--</div>-->
@@ -30,9 +28,10 @@
                         <td th:text="${product.getPrice()}">Price</td>
                         <td class="d-inline-block">
                             <div>
-                                <i class="fas fa-minus" th:id="${product.getId()}"></i>
-                                <span th:id="'quantity_' + ${product.getId()}" th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
-                                <i class="fas fa-plus" th:id="${product.getId()}"></i>
+                                <i class="fas fa-minus border rounded p-2" th:id="${product.getId()}"></i>
+                                <span class="ml-3 mr-3" th:id="'quantity_' + ${product.getId()}"
+                                      th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
+                                <i class="fas fa-plus border rounded p-2" th:id="${product.getId()}"></i>
                             </div>
                         </td>
                     </tr>
