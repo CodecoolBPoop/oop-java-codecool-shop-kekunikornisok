@@ -25,6 +25,16 @@ let dataHandler = {
                 callback(newValues);
             }
         })
+    },
+
+    getShoppingCartInfo: function (callback) {
+        $.ajax({
+            type: "GET",
+            url: "/change-quantity",
+            success: function (newValues) {
+                callback(newValues);
+            }
+        })
     }
 
 };
