@@ -50,6 +50,13 @@ let dom = {
 
         if (newValues["newTotalItems"] === "0") {
             document.getElementById("item-count").hidden = true;
+            for (let element of document.getElementsByClassName("shopping-cart-yes")) {
+                element.hidden = true;
+            }
+
+            for (let element of document.getElementsByClassName("shopping-cart-no")) {
+                element.hidden = false;
+            }
         }
 
         document.getElementById("total_items").innerText = "Total items: " + newValues["newTotalItems"];
@@ -61,6 +68,9 @@ let dom = {
         let isVisible;
         if (shoppingCartInfo["isVisible"] === "true") {
             isVisible = true;
+            for (let element of document.getElementsByClassName("shopping-cart-no")) {
+                element.hidden = false;
+            }
         } else if (shoppingCartInfo["isVisible"] === "false") {
             isVisible = false;
         }
