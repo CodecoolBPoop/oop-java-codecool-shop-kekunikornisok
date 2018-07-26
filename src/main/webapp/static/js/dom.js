@@ -57,7 +57,6 @@ let dom = {
     },
 
     setShoppingCartVisual: function (shoppingCartInfo) {
-        console.log("pina");
         let isVisible;
         if (shoppingCartInfo["isVisible"] === "true") {
             isVisible = true;

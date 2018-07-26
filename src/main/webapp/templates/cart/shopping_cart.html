@@ -19,7 +19,10 @@
                 </thead>
                 <tbody th:each="product,iterStat : ${products}">
                     <tr th:id="'table_row_' + ${product.getId()}">
-                        <th scope="row" th:text="${product.getId()}">Id</th>
+                        <th class="text-center" scope="row">
+                            <img class="cart_image group list-group-image" src="http://placehold.it/400x250/000/fff"
+                                 th:attr="src='/static/img/jar' + ${product.id} + '.png'" alt="" />
+                        </th>
                         <td th:text="${product.getName()}">Item</td>
                         <td>
                             <div th:text="'Category: ' + ${product.getProductCategory().getName()}">ProductCategory</div>

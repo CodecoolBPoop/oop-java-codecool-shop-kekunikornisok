@@ -90,7 +90,6 @@
 
 #item-count {
     position: absolute;
-    /*display: none;*/
     top: 60px;
     right: 90px;
     width: 30px;
@@ -100,4 +99,9 @@
     color: white;
     text-align: center;
     font-size: 20px;
+}
+
+.cart_image {
+    width: 50px;
+    height: 60px;
 }
