@@ -46,9 +46,13 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="shopping-cart-no" hidden>
-                <h1>Your cart is empty!</h1>
-            </div>
+            <table class="row shopping-cart-no" hidden>
+                <thead>
+                    <tr>
+                        <th class="text-center h1 font-weight-bold">Your cart is empty!</th>
+                    </tr>
+                </thead>
+            </table>
             <div th:if="${products.size() != 0}" class="float-right shopping-cart-yes">
                 <button class="btn btn-primary btn-outline-primary" data-toggle="collapse" href="#checkout"
                         role="button" aria-expanded="false" aria-controls="checkout">Proceed to checkout
