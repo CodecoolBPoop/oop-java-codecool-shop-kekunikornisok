@@ -1,3 +1,7 @@
+body {
+    background-color: #eeeeee;
+}
+
 .glyphicon {
     margin-right:5px;
 }
@@ -80,11 +84,11 @@
 }
 
 .fa-minus, .fa-plus {
-    background-color: green;
+    background-color: #5bc0de;
 }
 
 .fa-minus:hover, .fa-plus:hover {
-    background-color: rebeccapurple;
+    background-color: #50a8c2;
     cursor: pointer;
 }
 
@@ -104,4 +108,19 @@
 .cart_image {
     width: 50px;
     height: 60px;
+}
+
+.dropdown-item {
+    background-color: #eeeeee;
+    color: #5bc0de;
+}
+
+.dropdown-item:hover {
+    background-color: #d4d4d4;
+    color: #50a8c2;
+}
+
+.item {
+    background-color: #ffffff;
+    border-radius: 5%;
 }
