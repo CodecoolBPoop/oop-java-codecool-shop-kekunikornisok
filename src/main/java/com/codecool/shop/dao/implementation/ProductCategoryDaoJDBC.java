@@ -19,12 +19,11 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ) {
             while (resultSet.next()) {
-                ProductCategory actTodo = new ProductCategory(resultSet.getString("name"),
+                ProductCategory data = new ProductCategory(resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getString("department"));
-                resultList.add(actTodo);
+                resultList.add(data);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +46,6 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     @Override
     public ProductCategory find(String name) {
         return executeQueryWithReturnValue("SELECT * FROM product_category WHERE name LIKE '" + name + "';").get(0);
-
     }
 
     @Override
