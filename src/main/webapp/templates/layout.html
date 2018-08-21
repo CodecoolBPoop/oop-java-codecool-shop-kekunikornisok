@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:fragment="copy">
+    <head th:fragment="layout">
         <meta charset="utf-8" />
         <meta name="author" content="Codecool" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,7 +32,7 @@
         <script src="/static/js/dom.js" defer></script>
     </head>
     <body>
-        <nav th:fragment="copy" class="navbar navbar-light bg-dark">
+        <nav th:fragment="layout" class="navbar navbar-light bg-dark">
             <div class="row">
                 <a class="navbar-brand" href="/">
                     <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top ml-2" alt="">
@@ -40,20 +40,22 @@
                 </a>
                 <div class="dropdown">
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Category
-                        <span class="caret"></span></button>
+                        <span class="caret"></span>
+                    </button>
                     <ul class="dropdown-menu">
-                        <li th:each="categ,iterStat :${category}">
-                            <a class="dropdown-item" th:href="@{'/?category=' + ${categ.getId()} + '&value=' + ${categ.getName()}}" th:text="${categ.getName()}">HTML</a>
+                        <li th:each="categ :${category}">
+                            <a class="dropdown-item" th:href="@{'/?category=' + ${categ.getName()}}" th:text="${categ.getName()}">HTML</a>
                         </li>
                     </ul>
                 </div>
 
                 <div class="dropdown">
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">Supplier
-                        <span class="caret"></span></button>
+                        <span class="caret"></span>
+                    </button>
                     <ul class="dropdown-menu">
-                        <li th:each="supp,iterStat :${supplier}">
-                            <a class="dropdown-item" th:href="@{'/?supplier=' + ${supp.getId()}}" th:text="${supp.name}">HTML</a>
+                        <li th:each="supp :${supplier}">
+                            <a class="dropdown-item" th:href="@{'/?supplier=' + ${supp.getName()}}" th:text="${supp.getName()}">HTML</a>
                         </li>
                     </ul>
                 </div>
@@ -63,7 +65,7 @@
                 <form action="/shopping-cart" method="get">
                     <button class="btn btn-info btn-lg" type="submit"><i class="fas fa-shopping-cart"></i></button>
                 </form>
-                <span id="item-count" hidden></span>
+                <span id="item-count" class="d-none"></span>
             </div>
         </nav>
     </body>

@@ -2,66 +2,66 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <div th:replace="layout.html :: layout"></div>
     <body>
-    <div class="container">
-        <table th:if="${products.size() != 0}" class="table table-striped m-4 shopping-cart-not-empty border border-dark">
-            <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Item</th>
-                <th scope="col">Details</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-            </tr>
-            </thead>
-            <tbody th:each="product : ${products}">
-            <tr th:id="'table_row_' + ${product.getId()}">
-                <th scope="row">
-                    <img class="cart_image group list-group-image" src="http://placehold.it/400x250/000/fff"
-                         th:attr="src='/static/img/jar' + ${product.getId()} + '.png'" alt="" />
-                </th>
-                <td th:text="${product.getName()}">Item</td>
-                <td>
-                    <div th:text="'Category: ' + ${product.getProductCategory().getName()}">ProductCategory</div>
-                    <div th:text="'Supplier: ' + ${product.getSupplier().getName()}">Supplier</div>
-                </td>
-                <td th:text="${product.getPrice()}">Price</td>
-                <td class="d-inline-block">
-                    <div>
-                        <i class="fas fa-minus border rounded p-2" th:id="${product.getId()}"></i>
-                        <span class="ml-3 mr-3" th:id="'quantity_' + ${product.getId()}"
-                              th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
-                        <i class="fas fa-plus border rounded p-2" th:id="${product.getId()}"></i>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-                <td class="total"></td>
-                <td class="total" id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
-                <td class="total"></td>
-                <td class="total" id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
-                <td class="total">
-                    <a class="btn btn-info btn-outline-info" th:href="@{'/checkout'}" role="button">
-                        Proceed to checkout
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <table class="row shopping-cart-empty">
-            <thead>
-            <tr>
-                <th class="text-center h1 font-weight-bold">Your cart is empty!</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
-    <div th:if="${products.size() != 0}" class="text-center shopping-cart-yes">
-        <a class="btn btn-info btn-outline-info" th:href="@{'/checkout'}" role="button">
-            Proceed to checkout
-        </a>
-    </div>
-    <div id="alert-messages"></div>
+        <div class="container">
+            <table th:if="${products.size() != 0}" class="table table-striped m-4 shopping-cart-not-empty border border-dark">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody th:each="product : ${products}">
+                <tr th:id="'table_row_' + ${product.getId()}">
+                    <th scope="row">
+                        <img class="cart_image group list-group-image" src="http://placehold.it/400x250/000/fff"
+                             th:attr="src='/static/img/jar' + ${product.getId()} + '.png'" alt="" />
+                    </th>
+                    <td th:text="${product.getName()}">Item</td>
+                    <td>
+                        <div th:text="'Category: ' + ${product.getProductCategory().getName()}">ProductCategory</div>
+                        <div th:text="'Supplier: ' + ${product.getSupplier().getName()}">Supplier</div>
+                    </td>
+                    <td th:text="${product.getPrice()}">Price</td>
+                    <td class="d-inline-block">
+                        <div>
+                            <i class="fas fa-minus border rounded p-2" th:id="${product.getId()}"></i>
+                            <span class="ml-3 mr-3" th:id="'quantity_' + ${product.getId()}"
+                                  th:text="${shopping_cart.getQuantityById(product.getId())}"></span>
+                            <i class="fas fa-plus border rounded p-2" th:id="${product.getId()}"></i>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody>
+                <tr>
+                    <td class="total"></td>
+                    <td class="total" id="total_items" th:text="'Total items: ' + ${shopping_cart.getSize()}"></td>
+                    <td class="total"></td>
+                    <td class="total" id="total_price" th:text="'Total price: ' + ${shopping_cart.getTotalPrice()} + ' USD'"></td>
+                    <td class="total">
+                        <a class="btn btn-info btn-outline-info" th:href="@{'/checkout'}" role="button">
+                            Proceed to checkout
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="row shopping-cart-empty">
+                <thead>
+                <tr>
+                    <th class="text-center h1 font-weight-bold">Your cart is empty!</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div th:if="${products.size() != 0}" class="text-center shopping-cart-yes">
+            <a class="btn btn-info btn-outline-info" th:href="@{'/checkout'}" role="button">
+                Proceed to checkout
+            </a>
+        </div>
+        <div id="alert-messages"></div>
     </body>
 </html>
