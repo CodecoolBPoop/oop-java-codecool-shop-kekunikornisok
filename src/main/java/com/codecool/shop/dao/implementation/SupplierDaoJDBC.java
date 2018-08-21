@@ -23,12 +23,11 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier actTodo = new Supplier(resultSet.getString("name"),
+                Supplier data = new Supplier(resultSet.getString("name"),
                         resultSet.getString("description"));
 
-                resultList.add(actTodo);
+                resultList.add(data);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,26 +38,27 @@ public class SupplierDaoJDBC implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-
+        controller.executeQuery("INSERT INTO supplier(id, name, description, department) VALUES (DEFAULT, '" +
+                supplier.getName() + "', '" + supplier.getDescription() + "', '" + "';");
     }
 
     @Override
     public Supplier find(int id) {
-        return null;
+        return executeQueryWithReturnValue("SELECT * FROM supplier WHERE id = '" + id + "';").get(0);
     }
 
     @Override
     public Supplier find(String name) {
-        return null;
+        return executeQueryWithReturnValue("SELECT * FROM supplier WHERE name LIKE '" + name + "';").get(0);
     }
 
     @Override
     public void remove(int id) {
-
+        controller.executeQuery("DELETE FROM supplier WHERE id = '" + id + "';");
     }
 
     @Override
     public List<Supplier> getAll() {
-        return null;
+        return executeQueryWithReturnValue("SELECT * FROM supplier");
     }
 }
