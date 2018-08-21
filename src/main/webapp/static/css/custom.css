@@ -147,3 +147,24 @@ body {
 .total {
     background-color: #eeeeee;
 }
+#alert-messages {
+    width: 400px;
+    position: fixed;
+    top: 70px;
+    left: 800px;
+    right: 20px;
+}
+.checkout-menu {
+    background-color: #4527a0;
+}
+.checkout-cart {
+    background-color: #01579b;
+}
+#checkout-cart-list {
+    width: 310px;
+    height: 270px;
+    overflow-y: scroll;
+}
+.checkout-cart-item {
+    height: 90px;
+}
