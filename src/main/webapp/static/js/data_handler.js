@@ -8,9 +8,12 @@ let dataHandler = {
             type: "POST",
             url: "/change-quantity",
             data: {"quantity": "decrease",
-                   "id": productId},
+                "id": productId},
             success: function (newValues) {
                 callback(newValues);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
             }
         })
     },
@@ -20,9 +23,12 @@ let dataHandler = {
             type: "POST",
             url: "/change-quantity",
             data: {"quantity": "increase",
-                   "id": productId},
+                "id": productId},
             success: function (newValues) {
                 callback(newValues);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
             }
         })
     },
@@ -31,8 +37,11 @@ let dataHandler = {
         $.ajax({
             type: "GET",
             url: "/change-quantity",
-            success: function (newValues) {
-                callback(newValues);
+            success: function (shoppingCartInfo) {
+                callback(shoppingCartInfo);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
             }
         })
     }
