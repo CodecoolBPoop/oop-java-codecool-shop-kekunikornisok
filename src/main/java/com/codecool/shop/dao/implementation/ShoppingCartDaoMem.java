@@ -36,6 +36,11 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
+    public Product find(String name) {
+        return productsInCart.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    @Override
     public void remove(int id) {
         totalPrice -= find(id).getDefaultPrice();
         productsInCart.remove(find(id));
