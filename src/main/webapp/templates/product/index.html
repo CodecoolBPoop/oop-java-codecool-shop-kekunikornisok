@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <div th:replace="layout.html :: copy"></div>
+    <div th:replace="layout.html :: layout"></div>
     <body>
         <div class="jumbotron text-center">
-            <img class="group category-image" th:attr="src='/static/img/' + ${categoryName} + '.jpg'" alt="" />
+            <img class="group category-image" th:attr="src='/static/img/' + ${category_name} + '.jpg'" alt="" />
         </div>
         <div class="container">
             <div id="products" class="row">
-                <div class="item col-xs-6 col-md-3 border border-dark" th:each="prod,iterStat : ${products}">
+                <div class="item col-xs-6 col-md-3 border border-dark" th:each="prod : ${products}">
                     <div class="thumbnail">
-                        <img class="product_image group list-group-image" th:attr="src='/static/img/jar' + ${prod.id} + '.png'" alt="" />
+                        <img class="product_image group list-group-image" th:attr="src='/static/img/jar' + ${prod.getId()} + '.png'" alt="" />
                         <div class="caption">
                             <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
                             <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
@@ -19,15 +19,20 @@
                                 </div>
                                 <div class="col-xs-12 col-md-6">
                                     <form method="post">
-                                    <button class="btn btn-success add_to_cart" type="submit" th:value="${prod.getId()}"
-                                            name="product">+ Add to cart</button>
+                                        <button class="btn btn-success add_to_cart" type="submit" th:value="${prod.getId()}"
+                                                name="product">+ Add to cart</button>
                                     </form>
                                 </div>
+                                <a class="dropdown-item" th:href="@{'/?category=' + ${prod.getProductCategory().getName()}}"
+                                   th:text="${prod.getProductCategory().getName()}"></a>
+                                <a class="dropdown-item" th:href="@{'/?supplier=' + ${prod.getSupplier().getName()}}"
+                                   th:text="${prod.getSupplier().getName()}"></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div id="alert-messages"></div>
     </body>
 </html>
