@@ -24,4 +24,15 @@ public class JDBCController {
         return instance;
     }
 
+    public void executeQuery(String query) {
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
+        ){
+            statement.execute(query);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
