@@ -24,20 +24,15 @@ import java.util.Map;
 public class ShoppingCartController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ShoppingCartDaoMem shoppingCart = ShoppingCartDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-
-//        Map params = new HashMap<>();
-//        params.put("category", productCategoryDataStore.find(1));
-//        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariables(params);
+
         context.setVariable("products", shoppingCart.getAll());
         context.setVariable("shopping_cart", shoppingCart);
         context.setVariable("category", productCategoryDataStore.getAll());
