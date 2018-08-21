@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class JDBCController {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/proman";
+    private static final String DATABASE = "jdbc:postgresql://localhost:5432/codecool_shop";
     private static final String DB_USER = System.getenv("MY_PSQL_USER");
     private static final String DB_PASSWORD = System.getenv("MY_PSQL_PASSWORD");
     private static JDBCController instance = null;

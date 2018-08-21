@@ -24,7 +24,7 @@ CREATE TABLE product (
   id                  SERIAL       PRIMARY KEY   NOT NULL,
   name                VARCHAR(255) UNIQUE        NOT NULL,
   description         VARCHAR(255)               NOT NULL,
-  defaultPrice        DOUBLE                     NOT NULL,
+  defaultPrice        DOUBLE PRECISION           NOT NULL,
   currencyString      VARCHAR(255)               NOT NULL,
   supplier_id         INTEGER                    NOT NULL,
   product_category_id INTEGER                    NOT NULL
@@ -82,19 +82,19 @@ ALTER TABLE shopping_cart_products
 ALTER TABLE shipping_address
   ADD CONSTRAINT fk_shipping_address_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
-INSERT INTO supplier (id, name, description) VALUES ('ThimAir', 'A legjobb levego szeles e fold kereken');
-INSERT INTO supplier (id, name, description) VALUES ('TripAir', 'XXX');
+INSERT INTO supplier (id, name, description) VALUES (DEFAULT, 'ThimAir', 'A legjobb levego szeles e fold kereken');
+INSERT INTO supplier (id, name, description) VALUES (DEFAULT, 'TripAir', 'XXX');
 
-INSERT INTO product_category (id, name, description, department) VALUES ('UrbanAir', 'Air', 'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.');
-INSERT INTO product_category (id, name, description, department) VALUES ('CountrAir', 'Air', 'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.');
+INSERT INTO product_category (id, name, description, department) VALUES (DEFAULT, 'UrbanAir', 'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.', 'Air');
+INSERT INTO product_category (id, name, description, department) VALUES (DEFAULT, 'CountrAir', 'A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.', 'Air');
 
-INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES ('NewYorkAir', 119, 'USD', 'A forro beton es a csajok izzadsagszaga, ez New York', 1, 2);
-INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES ('Avonley Road 23', 99, 'USD', 'Ritkasag, nehezen befoghato levego, limitalt', 1, 1);
-INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES ('CzigarettAir', 69, 'USD', 'Kek Camel dohany, piros Smoking cigipapir es rizlaszuro = hmm', 1, 1);
+INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES (DEFAULT, 'NewYorkAir', 'A forro beton es a csajok izzadsagszaga, ez New York', 119, 'USD', 1, 2);
+INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES (DEFAULT, 'Avonley Road 23', 'Ritkasag, nehezen befoghato levego, limitalt', 99, 'USD', 1, 1);
+INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES (DEFAULT, 'CzigarettAir', 'Kek Camel dohany, piros Smoking cigipapir es rizlaszuro = hmm', 69, 'USD', 1, 1);
 
-INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) VALUES ('admin@gmail.com', 'admin', 'Nagy', 'Árpi', 'Hungary', 'Bugyi', 'Faszom street 7', '3012', false);
+INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) VALUES (DEFAULT, 'admin@gmail.com', 'admin', 'Nagy', 'Árpi', 'Hungary', 'Bugyi', 'Faszom street 7', '3012', false);
 
-INSERT INTO shopping_cart (id, user_id, "time", ordered) VALUES (1, '2018-9-20 14:51:00', false);
+INSERT INTO shopping_cart (id, user_id, "time", ordered) VALUES (DEFAULT, 1, '2018-9-20 14:51:00', false);
 
 INSERT INTO shopping_cart_products (shopping_card_id, product_id, amount) VALUES (1, 1, 1);
 INSERT INTO shopping_cart_products (shopping_card_id, product_id, amount) VALUES (1, 2, 3);
