@@ -97,8 +97,8 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${username != null}" class="dropdown logged-in d-none">
-                    <button class="btn btn-info ml-2 mr-2" type="button">
+                <div class="dropdown logged-in d-none">
+                    <button id="logout-button" class="btn btn-info ml-2 mr-2" type="button">
                         Logout
                     </button>
                 </div>
@@ -125,7 +125,7 @@
                 </div>
             </div>
 
-            <div th:if="${username != null}" class="cart" align="right">
+            <div class="cart logged-in d-none" align="right">
                 <form action="/shopping-cart" method="get">
                     <button class="btn btn-info btn-lg" type="submit"><i class="fas fa-shopping-cart"></i></button>
                 </form>
