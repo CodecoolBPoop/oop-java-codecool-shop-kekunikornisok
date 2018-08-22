@@ -44,6 +44,50 @@ let dataHandler = {
                 dom.handleError(errorInfo);
             }
         })
-    }
+    },
 
+    registerUser: function (userEmail, userPassword, callback) {
+        $.ajax({
+            type: "POST",
+            url: "/handle-user",
+            data: {"event": "register",
+                   "userEmail": userEmail,
+                   "userPassword": userPassword},
+            success: function (alertInfo) {
+                callback(alertInfo);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
+            }
+        })
+    },
+
+    loginUser: function (userEmail, userPassword, callback) {
+        $.ajax({
+            type: "POST",
+            url: "/handle-user",
+            data: {"event": "login",
+                   "userEmail": userEmail,
+                   "userPassword": userPassword},
+            success: function (alertInfo) {
+                callback(alertInfo);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
+            }
+        })
+    },
+
+    logoutUser: function (callback) {
+        $.ajax({
+            type: "GET",
+            url: "/handle-user",
+            success: function (alertInfo) {
+                callback(alertInfo);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
+            }
+        })
+    }
 };
