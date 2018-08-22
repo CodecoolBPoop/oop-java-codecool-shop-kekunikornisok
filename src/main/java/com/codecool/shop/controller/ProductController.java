@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoJDBC.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
     private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
-    private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -32,6 +33,8 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
+        HttpSession session = req.getSession();
+        context.setVariable("username", session.getAttribute("username"));
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));

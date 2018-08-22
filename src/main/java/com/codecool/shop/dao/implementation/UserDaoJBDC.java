@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDaoJBDC implements UserDao {
     private static final JDBCController controller = JDBCController.getInstance();
@@ -52,11 +53,11 @@ public class UserDaoJBDC implements UserDao {
     }
 
     @Override
-    public void add(User user) {
+    public void add(String emailAddress, String password, String firstName, String lastName, String country, String city, String address, String zipCode, boolean isShippingSame) {
         controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same)" +
-                "VALUES ( " + user.getId() + "', " + user.getEmailAddress() + "', " + user.getPassword() + "', " + user.getFirstName() +
-                 "', " + user.getLastName() + "', " + user.getCountry() + "', " + user.getCity() + "', " + user.getAddress() +
-                 "', " + user.getZipCode() + "', " + user.isShippingSame());
+                "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', '" + firstName +
+                "', '" + lastName + "', '" + country + "', '" + city + "', '" + address +
+                "', '" + zipCode + "', '" + isShippingSame + "';");
     }
 
     @Override
@@ -77,18 +78,29 @@ public class UserDaoJBDC implements UserDao {
     @Override
     public List<User> getAll() {
         return executeQueryWithReturnValue("SELECT * FROM users");
-
     }
 
     @Override
-    public boolean validRegister(String email) {
-        User user = this.find(email);
-        return user.getEmailAddress().equals(email);
+    public List<String> getEmails() {
+        return executeQueryWithReturnValue("SELECT email_address FROM users").stream()
+                                                                             .map(User::getEmailAddress)
+                                                                             .collect(Collectors.toList());
     }
 
     @Override
-    public boolean validlogin(String email, String password) {
-        User user = this.find(email);
+    public boolean validRegister(String email, String password, String passwordConfirm) {
+        return !getEmails().contains(email) && password.equals(passwordConfirm);
+    }
+
+    @Override
+    public boolean validLogin(String email, String password) {
+        User user;
+        try {
+            user = this.find(email);
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+
         return user.getEmailAddress().equals(email) && user.getPassword().equals(password);
     }
 }

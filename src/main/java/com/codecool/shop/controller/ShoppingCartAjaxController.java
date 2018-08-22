@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/change-quantity"})
-public class AjaxController extends HttpServlet {
+public class ShoppingCartAjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -53,6 +53,21 @@ let dom = {
         $("#confirmation_button").on("click", function () {
             $("html, body").animate({ scrollTop: 0 }, 1000);
         });
+
+        $("#register-button").on("click", function () {
+            dataHandler.registerUser($("#email_register").val(),
+                $("#password_register").val(),
+                $("#confirm_password").val(),
+                dom.resetRegisterInfo);
+        });
+
+        $("#login-button").on("click", function () {
+            dataHandler.loginUser($("#email_login").val(), $("#password_login").val(), dom.loginUser);
+        });
+
+        $("#logout-button").on("click", function () {
+            dataHandler.logoutUser(dom.logoutUser);
+        });
     },
 
     decreaseProductQuantity: function (productId) {
@@ -115,6 +130,33 @@ let dom = {
                 <div class="row h2 text-center">${errorInfo["errorMessage"]}</div>
             </div>
         `).appendTo(".container")
+    },
+
+    resetRegisterInfo: function (alertInfo) {
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
+        if (alertInfo["alertColor"] === "success") {
+            $("#email_register").val("");
+        }
+        $("#password_register").val("");
+        $("#confirm_password").val("");
+    },
+
+    loginUser: function (alertInfo) {
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
+        $("#email_login").val("");
+        $("#password_login").val("");
+        if (alertInfo["alertColor"] === "success") {
+            $(".logged-out").toggleClass("d-none");
+            $(".logged-in").toggleClass("d-none");
+        }
+    },
+
+    logoutUser: function (alertInfo) {
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
+        if (alertInfo["alertColor"] === "success") {
+            $(".logged-out").toggleClass("d-none");
+            $(".logged-in").toggleClass("d-none");
+        }
     }
 };
 
