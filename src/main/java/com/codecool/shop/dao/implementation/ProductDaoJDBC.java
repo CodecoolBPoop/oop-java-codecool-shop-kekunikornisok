@@ -15,6 +15,14 @@ import java.util.List;
 
 public class ProductDaoJDBC implements ProductDao {
     private static final JDBCController controller = JDBCController.getInstance();
+    private static ProductDaoJDBC instance = null;
+
+    public static ProductDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ProductDaoJDBC();
+        }
+        return instance;
+    }
 
     public List<Product> executeQueryWithReturnValue(String query) {
         List<Product> resultList = new ArrayList<>();
@@ -24,13 +32,13 @@ public class ProductDaoJDBC implements ProductDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Product data = new Product(resultSet.getString("name"),
-                        resultSet.getFloat("defaultPrice"),
-                        resultSet.getString("currencyString"),
+                Product data = new Product(resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getFloat("default_price"),
+                        resultSet.getString("currency_string"),
                         resultSet.getString("description"),
-                        (ProductCategory) resultSet.getObject("supplier_id"),
-                        (Supplier) resultSet.getObject("product_category_id"));
-
+                        ProductCategoryDaoJDBC.getInstance().find(resultSet.getInt("product_category_id")),
+                        SupplierDaoJDBC.getInstance().find(resultSet.getInt("supplier_id")));
                 resultList.add(data);
             }
 
@@ -45,7 +53,7 @@ public class ProductDaoJDBC implements ProductDao {
     public void add(Product product) {
         int supplierId = product.getSupplier().getId();
         int productCategoryId = product.getProductCategory().getId();
-        controller.executeQuery("INSERT INTO product (id, name, description, defaultPrice, currencyString, supplier_id, product_category_id) VALUES (DEFAULT, '" +
+        controller.executeQuery("INSERT INTO product (id, name, description, default_price, currency_string, supplier_id, product_category_id) VALUES (DEFAULT, '" +
                 product.getName() + "', '" + product.getDescription() + "', " + product.getDefaultPrice() + ", " + product.getDefaultCurrency() + ", " + supplierId + ", " + productCategoryId + ";");
     }
 
@@ -66,7 +74,7 @@ public class ProductDaoJDBC implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        return executeQueryWithReturnValue("SELECT * FROM product_category");
+        return executeQueryWithReturnValue("SELECT * FROM product");
     }
 
     @Override
