@@ -51,7 +51,7 @@ CREATE TABLE shopping_cart (
 );
 
 CREATE TABLE shopping_cart_products (
-  shopping_card_id  INTEGER   NOT NULL,
+  shopping_cart_id  INTEGER   NOT NULL,
   product_id        INTEGER   NOT NULL,
   amount            INTEGER   NOT NULL
 );
@@ -74,7 +74,7 @@ ALTER TABLE shopping_cart
   ADD CONSTRAINT fk_shopping_cart_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE shopping_cart_products
-  ADD CONSTRAINT fk_shopping_cart_products_shopping_cart_id FOREIGN KEY (shopping_card_id) REFERENCES shopping_cart(id);
+  ADD CONSTRAINT fk_shopping_cart_products_shopping_cart_id FOREIGN KEY (shopping_cart_id) REFERENCES shopping_cart(id);
 
 ALTER TABLE shopping_cart_products
   ADD CONSTRAINT fk_shopping_cart_products_product_id FOREIGN KEY (product_id) REFERENCES product(id);
@@ -123,8 +123,8 @@ INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '201
 INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '2018-9-20 14:55:00', 'in_cart');
 
 
-INSERT INTO shopping_cart_products (shopping_card_id, product_id, amount) VALUES (1, 1, 1);
-INSERT INTO shopping_cart_products (shopping_card_id, product_id, amount) VALUES (1, 2, 3);
+INSERT INTO shopping_cart_products (shopping_cart_id, product_id, amount) VALUES (1, 1, 1);
+INSERT INTO shopping_cart_products (shopping_cart_id, product_id, amount) VALUES (1, 2, 3);
 
 INSERT INTO shipping_address (user_id, country, city, address, zip_code) VALUES (1, 'Hungary', 'Ondód', 'Pina street 14', '3015');
 
