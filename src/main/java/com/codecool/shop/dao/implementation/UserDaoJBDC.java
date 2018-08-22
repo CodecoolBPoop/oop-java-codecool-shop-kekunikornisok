@@ -54,9 +54,9 @@ public class UserDaoJBDC implements UserDao {
     @Override
     public void add(User user) {
         controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same)" +
-                "VALUES ( " + user.getId() + "', " + user.getEmailAddress() + "', " + user.getPassword() + "', " + user.getFirstName() +
-                 "', " + user.getLastName() + "', " + user.getCountry() + "', " + user.getCity() + "', " + user.getAddress() +
-                 "', " + user.getZipCode() + "', " + user.isShippingSame());
+                "VALUES (DEFAULT, '" +  user.getEmailAddress() + "', '" + user.getPassword() + "', '" + user.getFirstName() +
+                 "', '" + user.getLastName() + "', '" + user.getCountry() + "', '" + user.getCity() + "', '" + user.getAddress() +
+                 "', '" + user.getZipCode() + "', '" + user.isShippingSame() + "';");
     }
 
     @Override
