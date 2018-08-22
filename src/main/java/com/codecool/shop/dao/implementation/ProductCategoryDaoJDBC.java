@@ -10,6 +10,14 @@ import java.util.List;
 
 public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     private static final JDBCController controller = JDBCController.getInstance();
+    private static ProductCategoryDaoJDBC instance = null;
+
+    public static ProductCategoryDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ProductCategoryDaoJDBC();
+        }
+        return instance;
+    }
 
     public List<ProductCategory> executeQueryWithReturnValue(String query) {
         List<ProductCategory> resultList = new ArrayList<>();
@@ -19,7 +27,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
              ResultSet resultSet = statement.executeQuery(query);
         ) {
             while (resultSet.next()) {
-                ProductCategory data = new ProductCategory(resultSet.getString("name"),
+                ProductCategory data = new ProductCategory(resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getString("department"));
                 resultList.add(data);
