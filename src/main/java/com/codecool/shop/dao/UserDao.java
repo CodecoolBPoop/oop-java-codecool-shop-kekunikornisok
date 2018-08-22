@@ -10,4 +10,6 @@ public interface UserDao {
     User find (String email);
     void remove(int id);
     List<User> getAll();
+    boolean validRegister(String email);
+    boolean validlogin(String email, String password);
 }

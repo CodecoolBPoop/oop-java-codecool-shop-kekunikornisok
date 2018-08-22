@@ -79,4 +79,16 @@ public class UserDaoJBDC implements UserDao {
         return executeQueryWithReturnValue("SELECT * FROM users");
 
     }
+
+    @Override
+    public boolean validRegister(String email) {
+        User user = this.find(email);
+        return user.getEmailAddress().equals(email);
+    }
+
+    @Override
+    public boolean validlogin(String email, String password) {
+        User user = this.find(email);
+        return user.getEmailAddress().equals(email) && user.getPassword().equals(password);
+    }
 }
