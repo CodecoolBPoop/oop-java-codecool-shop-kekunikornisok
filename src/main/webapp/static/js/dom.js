@@ -55,11 +55,14 @@ let dom = {
         });
 
         $("#register-button").on("click", function () {
-            dataHandler.registerUser(dom.resetRegisterInfo);
+            dataHandler.registerUser($("#email_register").val(),
+                $("#password_register").val(),
+                $("#confirm_password").val(),
+                dom.resetRegisterInfo);
         });
 
         $("#login-button").on("click", function () {
-            dataHandler.loginUser(dom.loginUser);
+            dataHandler.loginUser($("#email_login").val(), $("#password_login").val(), dom.loginUser);
         });
 
         $("#logout-button").on("click", function () {
@@ -142,12 +145,18 @@ let dom = {
         dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
         $("#email_login").val("");
         $("#password_login").val("");
-        $(".logged-out").classList.add("d-none");
-        $(".logged-in").classList.remove("d-none");
+        if (alertInfo["alertColor"] === "success") {
+            $(".logged-out").toggleClass("d-none");
+            $(".logged-in").toggleClass("d-none");
+        }
     },
 
     logoutUser: function (alertInfo) {
-
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
+        if (alertInfo["alertColor"] === "success") {
+            $(".logged-out").toggleClass("d-none");
+            $(".logged-in").toggleClass("d-none");
+        }
     }
 };
 

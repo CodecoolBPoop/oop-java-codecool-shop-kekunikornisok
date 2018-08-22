@@ -46,13 +46,14 @@ let dataHandler = {
         })
     },
 
-    registerUser: function (userEmail, userPassword, callback) {
+    registerUser: function (userEmail, userPassword, userPasswordConfirm, callback) {
         $.ajax({
             type: "POST",
             url: "/handle-user",
             data: {"event": "register",
                    "userEmail": userEmail,
-                   "userPassword": userPassword},
+                   "userPassword": userPassword,
+                   "userPasswordConfirm": userPasswordConfirm},
             success: function (alertInfo) {
                 callback(alertInfo);
             },
