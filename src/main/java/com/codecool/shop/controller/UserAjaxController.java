@@ -19,9 +19,11 @@ public class UserAjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Map<String, Integer> newData = new HashMap<>();
+        Map<String, String> newData = new HashMap<>();
 
-        newData.put("totalItemsInCart", shoppingCart.getSize());
+        newData.put("alertColor", "success");
+        newData.put("alertMessage", "You logged out successfully!");
+
         String json = new Gson().toJson(newData);
 
         resp.setContentType("application/json");
@@ -34,22 +36,24 @@ public class UserAjaxController extends HttpServlet {
         Map<String, String> newData = new HashMap<>();
 
         if (req.getParameter("event").equals("register")) {
-            if (userHandler.validEmail(req.getParameter("email_register"))) {
-                userHandler.add(req.getParameter("email_register"), req.getParameter("password_register"),
+            if (userHandler.validRegister(req.getParameter("userEmail"),
+                    req.getParameter("userPassword"),
+                    req.getParameter("userPasswordConfirm"))) {
+                userHandler.add(req.getParameter("userEmail"), req.getParameter("userPassword"),
                         null, null, null, null, null, null, false);
                 newData.put("alertColor", "success");
                 newData.put("alertMessage", "You registered successfully!");
             } else {
                 newData.put("alertColor", "danger");
-                newData.put("alertMessage", "Incorrect email or password!");
+                newData.put("alertMessage", "Email is already in use or your passwords do not match!");
             }
         } else if (req.getParameter("event").equals("login")) {
-            if (userHandler.validLogin(req.getParameter("email_login"), req.getParameter("password_login"))) {
-                User user = userHandler.find(req.getParameter("email_login"));
+            if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
+                User user = userHandler.find(req.getParameter("userEmail"));
                 newData.put("userId", Integer.toString(user.getId()));
                 newData.put("userName", user.getFirstName());
                 newData.put("alertColor", "success");
-                newData.put("alertMessage", "You registered successfully!");
+                newData.put("alertMessage", "You logged in successfully!");
             } else {
                 newData.put("alertColor", "danger");
                 newData.put("alertMessage", "Incorrect email or password!");
