@@ -13,7 +13,14 @@ import java.util.List;
 
 public class SupplierDaoJDBC implements SupplierDao {
     private static final JDBCController controller = JDBCController.getInstance();
+    private static SupplierDaoJDBC instance = null;
 
+    public static SupplierDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new SupplierDaoJDBC();
+        }
+        return instance;
+    }
 
     public List<Supplier> executeQueryWithReturnValue(String query) {
         List<Supplier> resultList = new ArrayList<>();
@@ -23,7 +30,8 @@ public class SupplierDaoJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier data = new Supplier(resultSet.getString("name"),
+                Supplier data = new Supplier(resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"));
 
                 resultList.add(data);
