@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDaoJBDC implements UserDao {
@@ -53,6 +54,12 @@ public class UserDaoJBDC implements UserDao {
     }
 
     @Override
+    public void add(String emailAddress, String password) {
+        controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) " +
+                "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', 'None',  'None', 'None', 'None', 'None', 'None', false);");
+    }
+
+    @Override
     public void add(String emailAddress, String password, String firstName, String lastName, String country, String city, String address, String zipCode, boolean isShippingSame) {
         controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same)" +
                 "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', '" + firstName +
@@ -77,14 +84,14 @@ public class UserDaoJBDC implements UserDao {
 
     @Override
     public List<User> getAll() {
-        return executeQueryWithReturnValue("SELECT * FROM users");
+        return executeQueryWithReturnValue("SELECT * FROM users;");
     }
 
     @Override
     public List<String> getEmails() {
-        return executeQueryWithReturnValue("SELECT email_address FROM users").stream()
-                                                                             .map(User::getEmailAddress)
-                                                                             .collect(Collectors.toList());
+        return executeQueryWithReturnValue("SELECT * FROM users;").stream()
+                                                                  .map(User::getEmailAddress)
+                                                                  .collect(Collectors.toList());
     }
 
     @Override
