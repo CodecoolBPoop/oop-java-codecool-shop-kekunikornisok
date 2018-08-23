@@ -48,6 +48,8 @@ let dom = {
 
         $("#payment_next_button").on("click", function () {
             $("html, body").animate({ scrollTop: 270 }, 1000);
+            dataHandler.billingAddress($("#first_name_billing").val(), $("#last_name_billing").val(), $("#country_billing").val(),
+                $("#state_billing").val(), $("#address_billing").val(), $("#zip_billing").val(), dom.billingAddressInfo)
         });
 
         $("#confirmation_button").on("click", function () {
@@ -157,6 +159,10 @@ let dom = {
             $(".logged-out").toggleClass("d-none");
             $(".logged-in").toggleClass("d-none");
         }
+    },
+
+    billingAddressInfo: function (alertInfo) {
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
     }
 };
 
