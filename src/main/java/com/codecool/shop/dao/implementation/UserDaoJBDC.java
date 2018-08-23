@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDaoJBDC implements UserDao {
@@ -65,6 +64,12 @@ public class UserDaoJBDC implements UserDao {
                 "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', '" + firstName +
                 "', '" + lastName + "', '" + country + "', '" + city + "', '" + address +
                 "', '" + zipCode + "', '" + isShippingSame + "';");
+    }
+
+    @Override
+    public void setTable(int id, String firstName, String lastName, String country, String city, String address, String zipCode) {
+        controller.executeQuery("UPDATE users SET first_name = '" + firstName + "', last_name = '" + lastName + "', country = '" + country +
+                "', city = '" + city + "', address = '" + address + "', zip_code = '" + zipCode + "' WHERE id = '" + id + "';");
     }
 
     @Override
