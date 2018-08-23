@@ -38,7 +38,7 @@
                     <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top ml-2" alt="">
                     <span class="brand">intAirnet</span>
                 </a>
-                <div th:if="${username == null}" class="dropdown logged-out">
+                <div th:classappend="${userId == null} ? '' : 'd-none'" class="dropdown logged-out">
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">
                         Register
                     </button>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${username == null}" class="dropdown logged-out">
+                <div th:classappend="${userId == null} ? '' : 'd-none'" class="dropdown logged-out">
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">
                         Login
                     </button>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="dropdown logged-in d-none">
+                <div th:classappend="${userId == null} ? 'd-none' : ''" class="dropdown logged-in">
                     <button id="logout-button" class="btn btn-info ml-2 mr-2" type="button">
                         Logout
                     </button>
@@ -125,7 +125,7 @@
                 </div>
             </div>
 
-            <div class="cart logged-in d-none" align="right">
+            <div th:classappend="${userId == null} ? 'd-none' : ''" class="cart logged-in" align="right">
                 <form action="/shopping-cart" method="get">
                     <button class="btn btn-info btn-lg" type="submit"><i class="fas fa-shopping-cart"></i></button>
                 </form>

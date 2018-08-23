@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/checkout"})
@@ -30,10 +31,11 @@ public class CheckoutController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-//        HttpSession session = req.getSession();
-//        context.setVariable("shopping_cart", session.getAttribute("shopping_cart"));
-//        context.setVariable("totalItems", session.getAttribute("totalItems"));
-//        context.setVariable("totalPrice", session.getAttribute("totalPrice"));
+        HttpSession session = req.getSession();
+
+        if (session.getAttribute("userId") == null) {
+            resp.sendRedirect("/");
+        }
 
         context.setVariable("products", shoppingCart.getAll());
         context.setVariable("shopping_cart", shoppingCart);
