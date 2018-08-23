@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserDaoJBDC implements UserDao {
+public class UserDaoJDBC implements UserDao {
     private static final JDBCController controller = JDBCController.getInstance();
-    private static UserDaoJBDC instance = null;
+    private static UserDaoJDBC instance = null;
 
-    public static UserDaoJBDC getInstance() {
+    public static UserDaoJDBC getInstance() {
         if (instance == null) {
-            instance = new UserDaoJBDC();
+            instance = new UserDaoJDBC();
         }
         return instance;
     }
