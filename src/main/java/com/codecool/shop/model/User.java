@@ -11,6 +11,16 @@ public class User {
     private String address;
     private String zipCode;
     private boolean isShippingSame;
+    private static User instance = null;
+
+    private User(){}
+
+    public static User getInstance(){
+        if (instance == null) {
+            instance = new User();
+        }
+        return instance;
+    }
 
     public User(int id, String emailAddress, String password, String firstName, String lastName, String country, String city, String address, String zipCode, boolean isShippingSame) {
         this.id = id;
