@@ -74,7 +74,7 @@ public class UserAjaxController extends HttpServlet {
             }
         }
         else if (req.getParameter("event").equals("pay")) {
-            userHandler.setTable(2,
+            userHandler.setTable((Integer)req.getSession(false).getAttribute("userId"),
                                 req.getParameter("firstName"),
                                 req.getParameter("lastName"),
                                 req.getParameter("country"),
