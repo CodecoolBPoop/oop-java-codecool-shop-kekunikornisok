@@ -45,8 +45,7 @@ public class UserAjaxController extends HttpServlet {
             if (userHandler.validRegister(req.getParameter("userEmail"),
                     req.getParameter("userPassword"),
                     req.getParameter("userPasswordConfirm"))) {
-                userHandler.add(req.getParameter("userEmail"), req.getParameter("userPassword"),
-                        null, null, null, null, null, null, false);
+                userHandler.add(req.getParameter("userEmail"), req.getParameter("userPassword"));
                 newData.put("alertColor", "success");
                 newData.put("alertMessage", "You registered successfully!");
             } else {
