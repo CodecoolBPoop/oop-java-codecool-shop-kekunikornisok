@@ -30,16 +30,17 @@ public class ProductController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        String categoryNameFromUrl = req.getParameter("category");
-        String supplierNameFromUrl = req.getParameter("supplier");
-
         HttpSession session = req.getSession(false);
 
-        try {
+        if (session == null) {
+            session = req.getSession(true);
+            session.setAttribute("userId", null);
+        } else {
             context.setVariable("userId", session.getAttribute("userId"));
-        } catch (NullPointerException e) {
-            context.setVariable("userId", null);
         }
+
+        String categoryNameFromUrl = req.getParameter("category");
+        String supplierNameFromUrl = req.getParameter("supplier");
 
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
@@ -53,6 +54,15 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        HttpSession session = req.getSession(false);
+
+        if (session == null) {
+            session = req.getSession(true);
+            session.setAttribute("userId", null);
+        } else {
+            context.setVariable("userId", session.getAttribute("userId"));
+        }
 
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
