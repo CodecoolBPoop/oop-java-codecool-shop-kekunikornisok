@@ -1,7 +1,9 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ShippingAddressDao;
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.UserDaoJBDC;
+import com.codecool.shop.dao.implementation.ShippingAddressDaoJDBC;
+import com.codecool.shop.dao.implementation.UserDaoJDBC;
 import com.codecool.shop.model.User;
 import com.google.gson.Gson;
 
@@ -16,8 +18,8 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/handle-user"})
 public class UserAjaxController extends HttpServlet {
-    private UserDao userHandler = UserDaoJBDC.getInstance();
-    private User user = User.getInstance();
+    private UserDao userHandler = UserDaoJDBC.getInstance();
+    private ShippingAddressDao shippingAddressHandler = ShippingAddressDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -51,43 +53,65 @@ public class UserAjaxController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Map<String, String> newData = new HashMap<>();
 
-        if (req.getParameter("event").equals("register")) {
-            if (userHandler.validRegister(req.getParameter("userEmail"),
-                    req.getParameter("userPassword"),
-                    req.getParameter("userPasswordConfirm"))) {
-                userHandler.add(req.getParameter("userEmail"), req.getParameter("userPassword"));
-                newData.put("alertColor", "success");
-                newData.put("alertMessage", "You registered successfully!");
-            } else {
-                newData.put("alertColor", "danger");
-                newData.put("alertMessage", "Email is already in use or your passwords do not match!");
-            }
-        } else if (req.getParameter("event").equals("login")) {
-            if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
-                User user = userHandler.find(req.getParameter("userEmail"));
+        switch (req.getParameter("event")) {
+            case "register":
+                if (userHandler.validRegister(req.getParameter("userEmail"),
+                        req.getParameter("userPassword"),
+                        req.getParameter("userPasswordConfirm"))) {
+                    userHandler.add(req.getParameter("userEmail"), req.getParameter("userPassword"));
+                    newData.put("alertColor", "success");
+                    newData.put("alertMessage", "You registered successfully!");
+                } else {
+                    newData.put("alertColor", "danger");
+                    newData.put("alertMessage", "Email is already in use or your passwords do not match!");
+                }
+                break;
+            case "login":
+                if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
+                    User user = userHandler.find(req.getParameter("userEmail"));
 
-                req.getSession().setAttribute("userId", user.getId());
+                    req.getSession().setAttribute("userId", user.getId());
 
-                newData.put("userId", Integer.toString(user.getId()));
-                newData.put("userName", user.getFirstName());
+                    newData.put("userId", Integer.toString(user.getId()));
+                    newData.put("userName", user.getFirstName());
+                    newData.put("alertColor", "success");
+                    newData.put("alertMessage", "You logged in successfully!");
+                } else {
+                    newData.put("userId", null);
+                    newData.put("alertColor", "danger");
+                    newData.put("alertMessage", "Incorrect email or password!");
+                }
+                break;
+            case "billing":
+                userHandler.setTable((Integer) req.getSession(false).getAttribute("userId"),
+                        req.getParameter("firstName"),
+                        req.getParameter("lastName"),
+                        req.getParameter("country"),
+                        req.getParameter("city"),
+                        req.getParameter("address"),
+                        req.getParameter("zipCode"));
                 newData.put("alertColor", "success");
-                newData.put("alertMessage", "You logged in successfully!");
-            } else {
-                newData.put("userId", null);
-                newData.put("alertColor", "danger");
-                newData.put("alertMessage", "Incorrect email or password!");
-            }
-        }
-        else if (req.getParameter("event").equals("pay")) {
-            userHandler.setTable((Integer)req.getSession(false).getAttribute("userId"),
-                                req.getParameter("firstName"),
-                                req.getParameter("lastName"),
-                                req.getParameter("country"),
-                                req.getParameter("city"),
-                                req.getParameter("address"),
-                                req.getParameter("zipCode"));
-            newData.put("alertColor", "success");
-            newData.put("alertMessage", "Save billing address!");
+                newData.put("alertMessage", "Save billing address!");
+                break;
+            case "shipping":
+                if (shippingAddressHandler.getUserId().contains((Integer) req.getSession(false).getAttribute("userId"))) {
+
+                    shippingAddressHandler.setTable((Integer) req.getSession(false).getAttribute("userId"),
+                            req.getParameter("country"),
+                            req.getParameter("city"),
+                            req.getParameter("address"),
+                            req.getParameter("zipCode"));
+                    newData.put("alertColor", "success");
+                    newData.put("alertMessage", "Save billing address!");
+                } else {
+                    shippingAddressHandler.add((Integer) req.getSession(false).getAttribute("userId"),
+                            req.getParameter("country"),
+                            req.getParameter("city"),
+                            req.getParameter("address"),
+                            req.getParameter("zipCode")
+                    );
+                }
+                break;
         }
         String json = new Gson().toJson(newData);
 
