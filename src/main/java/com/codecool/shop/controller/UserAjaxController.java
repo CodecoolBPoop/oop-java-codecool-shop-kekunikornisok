@@ -1,7 +1,10 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.ShippingAddressDao;
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.UserDaoJBDC;
+import com.codecool.shop.dao.implementation.ShippingAddressDaoJDBC;
+import com.codecool.shop.dao.implementation.UserDaoJDBC;
+import com.codecool.shop.model.ShippingAddress;
 import com.codecool.shop.model.User;
 import com.google.gson.Gson;
 
@@ -16,8 +19,8 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/handle-user"})
 public class UserAjaxController extends HttpServlet {
-    private UserDao userHandler = UserDaoJBDC.getInstance();
-    private User user = User.getInstance();
+    private UserDao userHandler = UserDaoJDBC.getInstance();
+    private ShippingAddressDao shippingAddressHandler = ShippingAddressDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -73,7 +76,7 @@ public class UserAjaxController extends HttpServlet {
                 newData.put("alertMessage", "Incorrect email or password!");
             }
         }
-        else if (req.getParameter("event").equals("pay")) {
+        else if (req.getParameter("event").equals("billing")) {
             userHandler.setTable((Integer)req.getSession(false).getAttribute("userId"),
                                 req.getParameter("firstName"),
                                 req.getParameter("lastName"),
@@ -83,6 +86,25 @@ public class UserAjaxController extends HttpServlet {
                                 req.getParameter("zipCode"));
             newData.put("alertColor", "success");
             newData.put("alertMessage", "Save billing address!");
+        }
+        else if (req.getParameter("event").equals("shipping")) {
+            if (shippingAddressHandler.getUserId().contains((Integer)req.getSession(false).getAttribute("userId"))) {
+
+                shippingAddressHandler.setTable((Integer) req.getSession(false).getAttribute("userId"),
+                        req.getParameter("country"),
+                        req.getParameter("city"),
+                        req.getParameter("address"),
+                        req.getParameter("zipCode"));
+                newData.put("alertColor", "success");
+                newData.put("alertMessage", "Save billing address!");
+            }else {
+                shippingAddressHandler.add((Integer) req.getSession(false).getAttribute("userId"),
+                        req.getParameter("country"),
+                        req.getParameter("city"),
+                        req.getParameter("address"),
+                        req.getParameter("zipCode")
+                );
+            }
         }
         String json = new Gson().toJson(newData);
 

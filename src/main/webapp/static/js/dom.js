@@ -40,6 +40,12 @@ let dom = {
                 // scrollTop: $("#payment").offset().top
                 scrollTop: 180
             }, 1000);
+            dataHandler.billingAddress($("#first_name_billing").val(), $("#last_name_billing").val(), $("#country_billing").val(),
+                                       $("#state_billing").val(), $("#address_billing").val(), $("#zip_billing").val(), dom.billingAddressInfo);
+            if (!$("#same_address").val()) {
+                dataHandler.shippingAddress($("#country_shipping").val(), $("#state_shipping").val(), $("#address_shipping").val(),
+                    $("#zip_shipping").val(), dom.shippingAddressInfo)
+            }
         });
 
         $("#payment_back_button").on("click", function () {
@@ -48,8 +54,7 @@ let dom = {
 
         $("#payment_next_button").on("click", function () {
             $("html, body").animate({ scrollTop: 270 }, 1000);
-            dataHandler.billingAddress($("#first_name_billing").val(), $("#last_name_billing").val(), $("#country_billing").val(),
-                $("#state_billing").val(), $("#address_billing").val(), $("#zip_billing").val(), dom.billingAddressInfo)
+
         });
 
         $("#confirmation_button").on("click", function () {
@@ -162,6 +167,9 @@ let dom = {
     },
 
     billingAddressInfo: function (alertInfo) {
+        dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
+    },
+    shippingAddressInfo: function (alertInfo) {
         dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
     }
 };

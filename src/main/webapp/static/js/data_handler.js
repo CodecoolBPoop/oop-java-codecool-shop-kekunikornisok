@@ -97,9 +97,28 @@ let dataHandler = {
             type: "POST",
             url: "/handle-user",
             data: {
-                "event": "pay",
+                "event": "billing",
                 "firstName": firstName,
                 "lastName": lastName,
+                "country": country,
+                "city": city,
+                "address": address,
+                "zipCode": zipCode},
+            success: function (alertInfo) {
+                callback(alertInfo);
+            },
+            error: function (errorInfo) {
+                dom.handleError(errorInfo);
+            }
+        })
+    },
+
+    shippingAddress: function (country, city, address, zipCode, callback) {
+        $.ajax({
+            type: "POST",
+            url: "/handle-user",
+            data: {
+                "event": "shipping",
                 "country": country,
                 "city": city,
                 "address": address,

@@ -63,7 +63,7 @@ public class UserDaoJDBC implements UserDao {
         controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same)" +
                 "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', '" + firstName +
                 "', '" + lastName + "', '" + country + "', '" + city + "', '" + address +
-                "', '" + zipCode + "', '" + isShippingSame + "';");
+                "', '" + zipCode + "', '" + isShippingSame + "');");
     }
 
     @Override
