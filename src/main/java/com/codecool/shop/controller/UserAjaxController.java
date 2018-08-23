@@ -20,21 +20,30 @@ public class UserAjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Map<String, String> newData = new HashMap<>();
+        HttpSession session = req.getSession(false);
 
-        HttpSession session = req.getSession();
-        if (session.getAttribute("userId") != null) {
-            session.invalidate();
+        if (session == null) {
+            session = req.getSession(true);
+            session.setAttribute("userId", null);
+            resp.sendRedirect("/");
+        } else {
+            if (session.getAttribute("userId") == null) {
+                resp.sendRedirect("/");
+            } else {
+                Map<String, String> newData = new HashMap<>();
+
+                session.setAttribute("userId", null);
+
+                newData.put("alertColor", "success");
+                newData.put("alertMessage", "You logged out successfully!");
+
+                String json = new Gson().toJson(newData);
+
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                resp.getWriter().write(json);
+            }
         }
-
-        newData.put("alertColor", "success");
-        newData.put("alertMessage", "You logged out successfully!");
-
-        String json = new Gson().toJson(newData);
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(json);
     }
 
     @Override
@@ -56,11 +65,7 @@ public class UserAjaxController extends HttpServlet {
             if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
                 User user = userHandler.find(req.getParameter("userEmail"));
 
-                HttpSession session = req.getSession(false);
-                if (session == null) {
-                    session = req.getSession(true);
-                    session.setAttribute("userId", user.getId());
-                }
+                req.getSession().setAttribute("userId", user.getId());
 
                 newData.put("userId", Integer.toString(user.getId()));
                 newData.put("userName", user.getFirstName());
