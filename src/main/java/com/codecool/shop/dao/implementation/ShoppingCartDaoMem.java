@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ShoppingCart;
 
 import java.util.*;
 
@@ -25,29 +26,29 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
 
     @Override
-    public void add(Product product) {
+    public void add(Product product, ShoppingCart shoppingCart) {
         totalPrice += product.getDefaultPrice();
         productsInCart.add(product);
     }
 
     @Override
-    public Product find(int id) {
+    public Product find(int id, ShoppingCart shoppingCart) {
         return productsInCart.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public Product find(String name) {
+    public Product find(String name, ShoppingCart shoppingCart) {
         return productsInCart.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
     }
 
     @Override
     public void remove(int id) {
-        totalPrice -= find(id).getDefaultPrice();
-        productsInCart.remove(find(id));
+       /* totalPrice -= find(id).getDefaultPrice();
+        productsInCart.remove(find(id));*/
     }
 
     @Override
-    public LinkedHashSet<Product> getAll() {
+    public LinkedHashSet<Product> getAll(ShoppingCart shoppingCart) {
         return new LinkedHashSet<>(productsInCart);
     }
 
