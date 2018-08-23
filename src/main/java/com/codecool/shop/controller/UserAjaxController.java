@@ -16,6 +16,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/handle-user"})
 public class UserAjaxController extends HttpServlet {
     private UserDao userHandler = UserDaoJBDC.getInstance();
+    private User user = User.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -58,12 +59,23 @@ public class UserAjaxController extends HttpServlet {
                 newData.put("alertMessage", "Incorrect email or password!");
             }
         }
-
+        else if (req.getParameter("event").equals("pay")) {
+            userHandler.setTable(2,
+                                req.getParameter("firstName"),
+                                req.getParameter("lastName"),
+                                req.getParameter("country"),
+                                req.getParameter("city"),
+                                req.getParameter("address"),
+                                req.getParameter("zipCode"));
+            newData.put("alertColor", "success");
+            newData.put("alertMessage", "Save billing address!");
+        }
         String json = new Gson().toJson(newData);
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json);
+
     }
 
 }
