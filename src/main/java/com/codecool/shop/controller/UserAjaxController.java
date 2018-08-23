@@ -1,7 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.UserDaoJBDC;
+import com.codecool.shop.dao.implementation.UserDaoJDBC;
 import com.codecool.shop.model.User;
 import com.google.gson.Gson;
 
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = {"/handle-user"})
 public class UserAjaxController extends HttpServlet {
-    private UserDao userHandler = UserDaoJBDC.getInstance();
+    private UserDao userHandler = UserDaoJDBC.getInstance();
     private User user = User.getInstance();
 
     @Override

@@ -89,7 +89,6 @@ public class ProductController extends HttpServlet {
     private void addProductToShoppingCart(int productId, ProductDao productStore, ShoppingCartDao shoppingCart) {
         for (Product item : productStore.getAll()) {
             if (item.getId() == productId) {
-                shoppingCart.add(item);
             }
         }
     }
