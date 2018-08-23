@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,11 @@ public class UserAjaxController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Map<String, String> newData = new HashMap<>();
+
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userId") != null) {
+            session.invalidate();
+        }
 
         newData.put("alertColor", "success");
         newData.put("alertMessage", "You logged out successfully!");
@@ -50,11 +56,19 @@ public class UserAjaxController extends HttpServlet {
         } else if (req.getParameter("event").equals("login")) {
             if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
                 User user = userHandler.find(req.getParameter("userEmail"));
+
+                HttpSession session = req.getSession(false);
+                if (session == null) {
+                    session = req.getSession(true);
+                    session.setAttribute("userId", user.getId());
+                }
+
                 newData.put("userId", Integer.toString(user.getId()));
                 newData.put("userName", user.getFirstName());
                 newData.put("alertColor", "success");
                 newData.put("alertMessage", "You logged in successfully!");
             } else {
+                newData.put("userId", null);
                 newData.put("alertColor", "danger");
                 newData.put("alertMessage", "Incorrect email or password!");
             }
