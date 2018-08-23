@@ -33,8 +33,14 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
-        HttpSession session = req.getSession();
-        context.setVariable("username", session.getAttribute("username"));
+        HttpSession session = req.getSession(false);
+
+        try {
+            context.setVariable("userId", session.getAttribute("userId"));
+        } catch (NullPointerException e) {
+            context.setVariable("userId", null);
+        }
+
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));
