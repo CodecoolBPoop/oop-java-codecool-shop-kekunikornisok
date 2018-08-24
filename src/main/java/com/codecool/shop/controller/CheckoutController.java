@@ -30,17 +30,24 @@ public class CheckoutController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
 
-        if (session.getAttribute("userId") == null) {
+        if (session == null) {
+            session = req.getSession(true);
+            session.setAttribute("userId", null);
             resp.sendRedirect("/");
+        } else {
+            if (session.getAttribute("userId") == null) {
+                resp.sendRedirect("/");
+            } else {
+                context.setVariable("userId", session.getAttribute("userId"));
+                context.setVariable("products", shoppingCartJDBC.getAll(shoppingCart));
+                context.setVariable("shopping_cart", shoppingCart);
+                context.setVariable("category", productCategoryDataStore.getAll());
+                context.setVariable("supplier", supplierDataStore.getAll());
+
+                engine.process("cart/checkout.html", context, resp.getWriter());
+            }
         }
-
-        context.setVariable("products", shoppingCartJDBC.getAll(shoppingCart));
-        context.setVariable("shopping_cart", shoppingCart);
-        context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("supplier", supplierDataStore.getAll());
-
-        engine.process("cart/checkout.html", context, resp.getWriter());
     }
 }
