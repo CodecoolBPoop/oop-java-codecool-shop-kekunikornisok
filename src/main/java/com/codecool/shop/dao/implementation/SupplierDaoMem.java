@@ -24,9 +24,9 @@ public class SupplierDaoMem implements SupplierDao {
     }
 
     @Override
-    public void add(Supplier supplier) {
-        supplier.setId(data.size() + 1);
-        data.add(supplier);
+    public void add(String name, String description) {
+//        supplier.setId(data.size() + 1);
+//        data.add(supplier);
     }
 
     @Override
