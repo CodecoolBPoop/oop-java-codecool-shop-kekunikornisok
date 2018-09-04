@@ -21,26 +21,26 @@ CREATE TABLE product_category (
 );
 
 CREATE TABLE product (
-  id                  SERIAL       PRIMARY KEY   NOT NULL,
-  name                VARCHAR(255) UNIQUE        NOT NULL,
-  description         VARCHAR(255)               NOT NULL,
-  default_price        DOUBLE PRECISION           NOT NULL,
-  currency_string      VARCHAR(255)               NOT NULL,
-  supplier_id         INTEGER                    NOT NULL,
-  product_category_id INTEGER                    NOT NULL
+  id                    SERIAL       PRIMARY KEY   NOT NULL,
+  name                  VARCHAR(255) UNIQUE        NOT NULL,
+  description           VARCHAR(255)               NOT NULL,
+  default_price         DOUBLE PRECISION           NOT NULL,
+  currency_string       VARCHAR(255)               NOT NULL,
+  supplier_id           INTEGER                    NOT NULL,
+  product_category_id   INTEGER                    NOT NULL
 );
 
 CREATE TABLE users (
-  id               SERIAL       PRIMARY KEY   NOT NULL,
-  email_address    VARCHAR(255) UNIQUE        NOT NULL,
-  password         VARCHAR(255)               NOT NULL,
-  first_name       VARCHAR(255)               NOT NULL,
-  last_name        VARCHAR(255)               NOT NULL,
-  country          VARCHAR(255)               NOT NULL,
-  city             VARCHAR(255)               NOT NULL,
-  address          VARCHAR(255)               NOT NULL,
-  zip_code         VARCHAR(255)               NOT NULL,
-  is_shipping_same BOOLEAN                    NOT NULL
+  id                  SERIAL       PRIMARY KEY   NOT NULL,
+  email_address       VARCHAR(255) UNIQUE        NOT NULL,
+  password            VARCHAR(255)               NOT NULL,
+  first_name          VARCHAR(255)               NOT NULL,
+  last_name           VARCHAR(255)               NOT NULL,
+  country             VARCHAR(255)               NOT NULL,
+  city                VARCHAR(255)               NOT NULL,
+  address             VARCHAR(255)               NOT NULL,
+  zip_code            VARCHAR(255)               NOT NULL,
+  is_shipping_same    BOOLEAN                    NOT NULL
 );
 
 CREATE TABLE shopping_cart (
@@ -119,8 +119,8 @@ INSERT INTO product (id, name, description, default_price, currency_string, supp
 
 INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) VALUES (DEFAULT, 'admin@gmail.com', 'admin', 'Nagy', 'Árpi', 'Hungary', 'Bugyi', 'Faszom street 7', '3012', false);
 
-INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '2018-9-20 14:51:00', 'checked');
-INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '2018-9-20 14:55:00', 'in_cart');
+INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '2018-9-20 14:51:00', 'CHECKED');
+INSERT INTO shopping_cart (id, user_id, "time", status) VALUES (DEFAULT, 1, '2018-9-20 14:55:00', 'IN_CART');
 
 
 INSERT INTO shopping_cart_products (shopping_cart_id, product_id, amount) VALUES (1, 1, 1);
