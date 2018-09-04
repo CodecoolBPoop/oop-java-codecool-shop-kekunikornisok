@@ -4,11 +4,10 @@ import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.jdbc.JDBCController;
 import com.codecool.shop.model.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,13 +22,19 @@ public class UserDaoJDBC implements UserDao {
         return instance;
     }
 
-    public List<User> executeQueryWithReturnValue(String query) {
+    private List<User> executeQueryWithReturnValue(String query, List<Object> parameters) {
+        Connection connection = controller.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         List<User> resultList = new ArrayList<>();
 
-        try (Connection connection = controller.getConnection();
-             Statement statement =connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query);
-        ){
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setObject(i + 1, parameters.get(i));
+            }
+            resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()){
                 User data = new User(resultSet.getInt("id"),
                         resultSet.getString("email_address"),
@@ -47,6 +52,11 @@ public class UserDaoJDBC implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+
+        } finally {
+            try { if (resultSet != null) resultSet.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (preparedStatement != null) preparedStatement.close(); } catch (SQLException e) { e.printStackTrace(); }
+            try { if (connection != null) connection.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
 
         return resultList;
@@ -54,49 +64,70 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public void add(String emailAddress, String password) {
-        controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) " +
-                "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', 'None',  'None', 'None', 'None', 'None', 'None', false);");
+        controller.executeQuery(
+        "INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same) " +
+                "VALUES (DEFAULT, ?, ?, 'None',  'None', 'None', 'None', 'None', 'None', false);",
+            Arrays.asList(emailAddress, password));
     }
 
     @Override
-    public void add(String emailAddress, String password, String firstName, String lastName, String country, String city, String address, String zipCode, boolean isShippingSame) {
-        controller.executeQuery("INSERT INTO users (id, email_address, password, first_name, last_name, country, city, address, zip_code, is_shipping_same)" +
-                "VALUES (DEFAULT, '" +  emailAddress + "', '" + password + "', '" + firstName +
-                "', '" + lastName + "', '" + country + "', '" + city + "', '" + address +
-                "', '" + zipCode + "', '" + isShippingSame + "');");
+    public void add(String emailAddress, String password, String firstName, String lastName, String country,
+                    String city, String address, String zipCode, boolean isShippingSame) {
+        controller.executeQuery(
+        "INSERT INTO users (id, email_address, password, first_name, last_name, country, " +
+                "city, address, zip_code, is_shipping_same) " +
+                "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+            Arrays.asList(emailAddress, password, firstName, lastName, country, city, address, zipCode, isShippingSame));
     }
 
     @Override
     public void setTable(int id, String firstName, String lastName, String country, String city, String address, String zipCode) {
-        controller.executeQuery("UPDATE users SET first_name = '" + firstName + "', last_name = '" + lastName + "', country = '" + country +
-                "', city = '" + city + "', address = '" + address + "', zip_code = '" + zipCode + "' WHERE id = '" + id + "';");
+        controller.executeQuery(
+        "UPDATE users SET first_name = ?, last_name = ?, country = ?, city = ?, address = ?, zip_code = ? " +
+                "WHERE id = ?;",
+            Arrays.asList(firstName, lastName, country, city, address, zipCode, id));
     }
 
     @Override
     public User find(int id) {
-        return executeQueryWithReturnValue("SELECT * FROM users WHERE id = '" + id + "';").get(0);
+        List<User> users = executeQueryWithReturnValue(
+        "SELECT * FROM users WHERE id = ?;",
+            Collections.singletonList(id));
+
+        return (users.size() != 0) ? users.get(0) : null;
     }
 
     @Override
     public User find(String email) {
-        return executeQueryWithReturnValue("SELECT * FROM users WHERE email_address LIKE '" + email + "';").get(0);
+        List<User> users = executeQueryWithReturnValue(
+        "SELECT * FROM users WHERE email_address LIKE ?;",
+            Collections.singletonList(email));
+
+        return (users.size() != 0) ? users.get(0) : null;
     }
 
     @Override
     public void remove(int id) {
-        controller.executeQuery("DELETE FROM users WHERE id = '" + id + "';");
+        controller.executeQuery(
+        "DELETE FROM users WHERE id = ?;",
+            Collections.singletonList(id));
     }
 
     @Override
     public List<User> getAll() {
-        return executeQueryWithReturnValue("SELECT * FROM users;");
+        return executeQueryWithReturnValue(
+        "SELECT * FROM users;",
+            Collections.emptyList());
     }
 
     @Override
     public List<String> getEmails() {
-        return executeQueryWithReturnValue("SELECT * FROM users;").stream()
-                                                                  .map(User::getEmailAddress)
-                                                                  .collect(Collectors.toList());
+        return executeQueryWithReturnValue(
+        "SELECT * FROM users;",
+            Collections.emptyList())
+                .stream()
+                .map(User::getEmailAddress)
+                .collect(Collectors.toList());
     }
 
     @Override

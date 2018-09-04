@@ -4,14 +4,24 @@ import java.util.Date;
 
 public class ShoppingCart {
 
+    private int id;
     private int userId;
     private Date time;
-    private String status;
+    private ShoppingCartStatus status;
 
-    public ShoppingCart(int userId, java.sql.Date time, String status) {
+    public ShoppingCart(int id, int userId, Date time, ShoppingCartStatus status) {
+        this.id = id;
         this.userId = userId;
         this.time = time;
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -30,11 +40,11 @@ public class ShoppingCart {
         this.time = time;
     }
 
-    public String getStatus() {
+    public ShoppingCartStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ShoppingCartStatus status) {
         this.status = status;
     }
 }

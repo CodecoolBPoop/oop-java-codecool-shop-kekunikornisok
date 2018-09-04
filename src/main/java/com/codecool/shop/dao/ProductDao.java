@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface ProductDao {
 
-    void add(Product product);
+    void add(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier);
     Product find(int id);
     Product find(String name);
 
     void remove(int id);
 
     List<Product> getAll();
-    List<Product> getBy(Supplier supplier);
-    List<Product> getBy(ProductCategory productCategory);
+    List<Product> getBySupplier(int supplierId);
+    List<Product> getByProductCategory(int productCategoryId);
 
 }

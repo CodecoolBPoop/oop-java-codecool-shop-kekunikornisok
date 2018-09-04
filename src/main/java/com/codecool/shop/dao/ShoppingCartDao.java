@@ -1,16 +1,21 @@
 package com.codecool.shop.dao;
 
-import com.codecool.shop.model.*;
-import java.util.Set;
+
+import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.ShoppingCartStatus;
+
+import java.util.Date;
+import java.util.List;
 
 public interface ShoppingCartDao {
 
-    void add(Product product);
-    Product find(int id);
-    Product find(String name);
+    void add(int userId, Date time, ShoppingCartStatus status);
+    ShoppingCart find(int id);
+    ShoppingCart find(String name);
+    ShoppingCart findActiveCart();
 
     void remove(int id);
 
-    Set<Product> getAll();
+    List<ShoppingCart> getAll();
 
 }
