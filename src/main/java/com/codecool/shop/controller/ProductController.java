@@ -80,9 +80,9 @@ public class ProductController extends HttpServlet {
 
     private List<Product> getProducts(String categoryNameFromUrl, String supplierNameFromUrl) {
         if (categoryNameFromUrl != null) {
-            return productDataStore.getBy(productCategoryDataStore.find(categoryNameFromUrl));
+            return productDataStore.getByProductCategory(productCategoryDataStore.find(categoryNameFromUrl).getId());
         } else if (supplierNameFromUrl != null) {
-            return productDataStore.getBy(supplierDataStore.find(supplierNameFromUrl));
+            return productDataStore.getBySupplier(supplierDataStore.find(supplierNameFromUrl).getId());
         }
 
         return productDataStore.getAll();

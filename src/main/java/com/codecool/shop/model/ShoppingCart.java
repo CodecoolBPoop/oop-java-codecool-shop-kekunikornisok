@@ -9,7 +9,7 @@ public class ShoppingCart {
     private Date time;
     private ShoppingCartStatus status;
 
-    public ShoppingCart(int id, int userId, java.sql.Date time, ShoppingCartStatus status) {
+    public ShoppingCart(int id, int userId, Date time, ShoppingCartStatus status) {
         this.id = id;
         this.userId = userId;
         this.time = time;

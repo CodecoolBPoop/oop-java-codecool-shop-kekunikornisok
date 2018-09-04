@@ -1,14 +1,16 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ShoppingCart;
+import com.codecool.shop.model.ShoppingCartStatus;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ShoppingCartDaoMem implements ShoppingCartDao {
 
-    private List<Product> productsInCart = new ArrayList<>();
-    private float totalPrice = 0;
+    private List<ShoppingCart> data = new ArrayList<>();
     private static ShoppingCartDaoMem instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
@@ -25,42 +27,33 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
 
     @Override
-    public void add(Product product) {
-        totalPrice += product.getDefaultPrice();
-        productsInCart.add(product);
+    public void add(int userId, Date time, ShoppingCartStatus status) {
+        data.add(new ShoppingCart(data.size() + 1, userId, time, status));
     }
 
     @Override
-    public Product find(int id) {
-        return productsInCart.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public ShoppingCart find(int id) {
+        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public Product find(String name) {
-        return productsInCart.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
+    public ShoppingCart find(String name) {
+        return null;
+    }
+
+    @Override
+    public ShoppingCart findActiveCart() {
+        return data.stream().filter(t -> t.getStatus().equals(ShoppingCartStatus.IN_CART)).findFirst().orElse(null);
     }
 
     @Override
     public void remove(int id) {
-        totalPrice -= find(id).getDefaultPrice();
-        productsInCart.remove(find(id));
+        data.remove(find(id));
     }
 
     @Override
-    public LinkedHashSet<Product> getAll() {
-        return new LinkedHashSet<>(productsInCart);
-    }
-
-    public int getSize() {
-        return productsInCart.size();
-    }
-
-    public float getTotalPrice() {
-        return totalPrice;
-    }
-
-    public Integer getQuantityById(int id) {
-        return (int) productsInCart.stream().filter(t -> t.getId() == id).count();
+    public List<ShoppingCart> getAll() {
+        return data;
     }
 
 }
