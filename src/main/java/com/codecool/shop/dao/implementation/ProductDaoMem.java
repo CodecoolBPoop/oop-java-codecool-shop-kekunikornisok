@@ -28,9 +28,8 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public void add(Product product) {
-        product.setId(data.size() + 1);
-        data.add(product);
+    public void add(String name, float defaultPrice, String currencyString, String description, ProductCategory productCategory, Supplier supplier) {
+        data.add(new Product(data.size() + 1, name, defaultPrice, currencyString, description, productCategory, supplier));
     }
 
     @Override
@@ -54,12 +53,12 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
-    public List<Product> getBy(Supplier supplier) {
-        return data.stream().filter(t -> t.getSupplier().equals(supplier)).collect(Collectors.toList());
+    public List<Product> getBySupplier(int supplierId) {
+        return data.stream().filter(t -> t.getSupplier().getId() == supplierId).collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> getBy(ProductCategory productCategory) {
-        return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+    public List<Product> getByProductCategory(int productCategoryId) {
+        return data.stream().filter(t -> t.getProductCategory().getId() == productCategoryId).collect(Collectors.toList());
     }
 }
