@@ -103,7 +103,7 @@ let dom = {
     },
 
     setShoppingCartVisual: function (shoppingCartInfo) {
-        if (parseInt(shoppingCartInfo["totalItemsInCart"]) !== 0) {
+        if (parseInt(shoppingCartInfo["totalItemsInCart"]) !== 0 && ($("#item-count").hasClass("d-none"))) {
             $("#item-count").toggleClass("d-none");
             $(".shopping-cart-empty").toggleClass("d-none");
         }
@@ -149,6 +149,7 @@ let dom = {
     },
 
     loginUser: function (alertInfo) {
+        dataHandler.getShoppingCartInfo(dom.setShoppingCartVisual);
         dom.showAlert(alertInfo["alertMessage"], alertInfo["alertColor"]);
         $("#email_login").val("");
         $("#password_login").val("");

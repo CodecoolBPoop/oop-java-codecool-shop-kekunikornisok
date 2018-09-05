@@ -1,14 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -21,10 +15,10 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
-    private ProductDao productDataStore = ProductDaoMem.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-    private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
+    private ProductCategoryDao productCategory = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDao supplier = SupplierDaoJDBC.getInstance();
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
+    private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -41,11 +35,13 @@ public class CheckoutController extends HttpServlet {
             if (session.getAttribute("userId") == null) {
                 resp.sendRedirect("/");
             } else {
+                int activeCartId = shoppingCart.findActiveCart().getId();
                 context.setVariable("userId", session.getAttribute("userId"));
-                context.setVariable("products", shoppingCart.getAll());
-                context.setVariable("shopping_cart", shoppingCart);
-                context.setVariable("category", productCategoryDataStore.getAll());
-                context.setVariable("supplier", supplierDataStore.getAll());
+                context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));
+                context.setVariable("totalItemNumber", shoppingCartProduct.getProductAmountInCart(activeCartId));
+                context.setVariable("totalPrice", shoppingCartProduct.getTotalPriceInCart(activeCartId));
+                context.setVariable("category", productCategory.getAll());
+                context.setVariable("supplier", supplier.getAll());
 
                 engine.process("cart/checkout.html", context, resp.getWriter());
             }

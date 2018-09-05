@@ -65,7 +65,7 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
     @Override
     public int addProductToShoppingCart(int shoppingCartId, int productId) {
         List<ShoppingCartProduct> products = findProduct(shoppingCartId, productId);
-        int newAmount = 0;
+        int newAmount;
 
         if (products.size() == 0) {
             newAmount = controller.executeQueryWithIntReturnValue(
@@ -87,13 +87,13 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
     @Override
     public int removeProductToShoppingCart(int shoppingCartId, int productId) {
         int productAmount = findProduct(shoppingCartId, productId).get(0).getAmount();
-        int newAmount = 0;
+        int newAmount;
 
         if (productAmount == 1) {
             newAmount = controller.executeQueryWithIntReturnValue(
                     "DELETE FROM shopping_cart_products " +
                             "WHERE shopping_cart_id = ? AND product_id = ? " +
-                            "RETURNING amount;",
+                            "RETURNING 0;",
                     Arrays.asList(shoppingCartId, productId));
         } else {
             newAmount = controller.executeQueryWithIntReturnValue(
@@ -176,7 +176,8 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
 
         try {
             preparedStatement = connection.prepareStatement(
-            "SELECT product.id, product.name, product.default_price, product_category.name AS product_category, " +
+            "SELECT product.id, product.name, product.description, product.default_price, " +
+                    "       product_category.name AS product_category, " +
                     "       supplier.name AS supplier, shopping_cart_products.amount " +
                     "  FROM product " +
                     "       JOIN product_category ON product.product_category_id = product_category.id " +
@@ -193,6 +194,7 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
                 Map<String, Object> data = new HashMap<>();
                 data.put("id", resultSet.getInt("id"));
                 data.put("name", resultSet.getString("name"));
+                data.put("description", resultSet.getString("description"));
                 data.put("defaultPrice", resultSet.getFloat("default_price"));
                 data.put("productCategory", resultSet.getString("product_category"));
                 data.put("supplier", resultSet.getString("supplier"));

@@ -17,9 +17,9 @@ import java.util.List;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
-    private ProductDao productDataStore = ProductDaoJDBC.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+    private ProductDao product = ProductDaoJDBC.getInstance();
+    private ProductCategoryDao productCategory = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDao supplier = SupplierDaoJDBC.getInstance();
     private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
     private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
 
@@ -40,8 +40,8 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
-        context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("supplier", supplierDataStore.getAll());
+        context.setVariable("category", productCategory.getAll());
+        context.setVariable("supplier", supplier.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));
         context.setVariable("products", getProducts(categoryNameFromUrl, supplierNameFromUrl));
 
@@ -67,8 +67,8 @@ public class ProductController extends HttpServlet {
 
         shoppingCartProduct.addProductToShoppingCart(shoppingCart.findActiveCart().getId(), Integer.parseInt(req.getParameter("product")));
 
-        context.setVariable("category", productCategoryDataStore.getAll());
-        context.setVariable("supplier", supplierDataStore.getAll());
+        context.setVariable("category", productCategory.getAll());
+        context.setVariable("supplier", supplier.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));
         context.setVariable("products", getProducts(categoryNameFromUrl, supplierNameFromUrl));
 
@@ -78,12 +78,12 @@ public class ProductController extends HttpServlet {
 
     private List<Product> getProducts(String categoryNameFromUrl, String supplierNameFromUrl) {
         if (categoryNameFromUrl != null) {
-            return productDataStore.getByProductCategory(productCategoryDataStore.find(categoryNameFromUrl).getId());
+            return product.getByProductCategory(productCategory.find(categoryNameFromUrl).getId());
         } else if (supplierNameFromUrl != null) {
-            return productDataStore.getBySupplier(supplierDataStore.find(supplierNameFromUrl).getId());
+            return product.getBySupplier(supplier.find(supplierNameFromUrl).getId());
         }
 
-        return productDataStore.getAll();
+        return product.getAll();
     }
 
     private String getCategoryImg (String categoryNameFromUrl) {

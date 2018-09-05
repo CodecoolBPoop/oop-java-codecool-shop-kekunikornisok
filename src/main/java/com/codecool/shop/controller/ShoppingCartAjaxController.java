@@ -3,9 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.ShoppingCartProductDao;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartProductDaoJDBC;
-import com.codecool.shop.model.ShoppingCartProduct;
 import com.google.gson.Gson;
 
 import javax.servlet.annotation.WebServlet;
