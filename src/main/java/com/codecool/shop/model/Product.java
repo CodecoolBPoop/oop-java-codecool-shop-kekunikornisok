@@ -17,22 +17,6 @@ public class Product extends BaseModel {
         this.setProductCategory(productCategory);
     }
 
-    public float getDefaultPrice() {
-        return defaultPrice;
-    }
-
-    public void setDefaultPrice(float defaultPrice) {
-        this.defaultPrice = defaultPrice;
-    }
-
-    public Currency getDefaultCurrency() {
-        return defaultCurrency;
-    }
-
-    public void setDefaultCurrency(Currency defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
-    }
-
     public String getPrice() {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
@@ -46,10 +30,6 @@ public class Product extends BaseModel {
         return productCategory;
     }
 
-    public String getProductCategoryName() {
-        return productCategory.name;
-    }
-
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
         this.productCategory.addProduct(this);
@@ -57,10 +37,6 @@ public class Product extends BaseModel {
 
     public Supplier getSupplier() {
         return supplier;
-    }
-
-    public String getSupplierName() {
-        return supplier.name;
     }
 
     public void setSupplier(Supplier supplier) {
