@@ -1,13 +1,8 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -20,13 +15,14 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/shopping-cart"})
 public class ShoppingCartController extends HttpServlet {
+    private ProductDao productDataStore = ProductDaoJDBC.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
+    private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+    private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ShoppingCartDaoMem shoppingCart = ShoppingCartDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -40,9 +36,11 @@ public class ShoppingCartController extends HttpServlet {
             if (session.getAttribute("userId") == null) {
                 resp.sendRedirect("/");
             } else {
+                int activeCartId = shoppingCart.findActiveCart().getId();
                 context.setVariable("userId", session.getAttribute("userId"));
-                context.setVariable("products", shoppingCart.getAll());
-                context.setVariable("shopping_cart", shoppingCart);
+                context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));
+                context.setVariable("totalItemNumber", shoppingCartProduct.getProductAmountInCart(activeCartId));
+                context.setVariable("totalPrice", shoppingCartProduct.getTotalPriceInCart(activeCartId));
                 context.setVariable("category", productCategoryDataStore.getAll());
                 context.setVariable("supplier", supplierDataStore.getAll());
 

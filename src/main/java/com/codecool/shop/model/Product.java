@@ -46,6 +46,10 @@ public class Product extends BaseModel {
         return productCategory;
     }
 
+    public String getProductCategoryName() {
+        return productCategory.name;
+    }
+
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
         this.productCategory.addProduct(this);
@@ -53,6 +57,10 @@ public class Product extends BaseModel {
 
     public Supplier getSupplier() {
         return supplier;
+    }
+
+    public String getSupplierName() {
+        return supplier.name;
     }
 
     public void setSupplier(Supplier supplier) {

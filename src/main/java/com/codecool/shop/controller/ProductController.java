@@ -1,9 +1,6 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.Product;
@@ -23,7 +20,8 @@ public class ProductController extends HttpServlet {
     private ProductDao productDataStore = ProductDaoJDBC.getInstance();
     private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
     private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
-    private ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
+    private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -67,7 +65,7 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
-        addProductToShoppingCart(Integer.parseInt(req.getParameter("product")), productDataStore, shoppingCart);
+        shoppingCartProduct.addProductToShoppingCart(shoppingCart.findActiveCart().getId(), Integer.parseInt(req.getParameter("product")));
 
         context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("supplier", supplierDataStore.getAll());
@@ -93,14 +91,6 @@ public class ProductController extends HttpServlet {
             return categoryNameFromUrl;
         } else {
             return "Cloud";
-        }
-    }
-
-    private void addProductToShoppingCart(int productId, ProductDao productStore, ShoppingCartDao shoppingCart) {
-        for (Product item : productStore.getAll()) {
-            if (item.getId() == productId) {
-                shoppingCart.add(item);
-            }
         }
     }
 }
