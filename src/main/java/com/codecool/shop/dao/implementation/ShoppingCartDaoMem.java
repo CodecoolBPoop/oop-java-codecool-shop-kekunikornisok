@@ -42,6 +42,11 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
+    public void changeCartStatus(int userId, ShoppingCartStatus statusFrom, ShoppingCartStatus statusTo) {
+
+    }
+
+    @Override
     public void remove(int id) {
         data.remove(find(id));
     }
