@@ -84,7 +84,7 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
         controller.executeQuery(
         "UPDATE shopping_cart SET status = ? " +
                 "WHERE user_id = ? AND status = ?;",
-            Arrays.asList(statusTo, userId, statusFrom));
+            Arrays.asList(statusTo.toString(), userId, statusFrom.toString()));
     }
 
     @Override

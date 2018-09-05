@@ -40,7 +40,12 @@ public class JDBCController {
         try {
             preparedStatement = connection.prepareStatement(query);
             for (int i = 0; i < parameters.size(); i++) {
-                preparedStatement.setObject(i + 1, parameters.get(i));
+                System.out.println(parameters.get(i).getClass());
+                if (parameters.get(i) instanceof java.sql.Date) {
+                    preparedStatement.setTimestamp(i + 1, new java.sql.Timestamp(((java.sql.Date) parameters.get(i)).getTime()));
+                } else {
+                    preparedStatement.setObject(i + 1, parameters.get(i));
+                }
             }
             preparedStatement.execute();
 
