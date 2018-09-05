@@ -11,11 +11,11 @@ import java.util.Date;
 
 public class ShoppingCartDaoJDBC implements ShoppingCartDao {
     private static final JDBCController controller = JDBCController.getInstance();
-    private static ProductDaoJDBC instance = null;
+    private static ShoppingCartDaoJDBC instance = null;
 
-    public static ProductDaoJDBC getInstance() {
+    public static ShoppingCartDaoJDBC getInstance() {
         if (instance == null) {
-            instance = new ProductDaoJDBC();
+            instance = new ShoppingCartDaoJDBC();
         }
         return instance;
     }
