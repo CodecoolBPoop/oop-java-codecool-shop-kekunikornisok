@@ -80,7 +80,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add("Santa Claus Is Coming", 24, "USD", "Egynyari termek, ketszer", wintAir, airAction);
 
         //setting up starter shopping cart
-        shoppingCartDataStore.add(1, new GregorianCalendar(2018, 8, 24).getTime(), ShoppingCartStatus.IN_CART);
+        shoppingCartDataStore.add(1, new GregorianCalendar(2018, 8, 24).getTime());
 
     }
 }

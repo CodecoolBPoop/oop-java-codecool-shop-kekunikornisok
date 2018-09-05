@@ -27,8 +27,8 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
 
 
     @Override
-    public void add(int userId, Date time, ShoppingCartStatus status) {
-        data.add(new ShoppingCart(data.size() + 1, userId, time, status));
+    public void add(int userId, Date time) {
+        data.add(new ShoppingCart(data.size() + 1, userId, time, ShoppingCartStatus.IN_CART));
     }
 
     @Override
@@ -37,12 +37,7 @@ public class ShoppingCartDaoMem implements ShoppingCartDao {
     }
 
     @Override
-    public ShoppingCart find(String name) {
-        return null;
-    }
-
-    @Override
-    public ShoppingCart findActiveCart() {
+    public ShoppingCart findActiveCartForUser(int userId) {
         return data.stream().filter(t -> t.getStatus().equals(ShoppingCartStatus.IN_CART)).findFirst().orElse(null);
     }
 

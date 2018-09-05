@@ -54,11 +54,11 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
     }
 
     @Override
-    public void add(int userId, Date time, ShoppingCartStatus status) {
+    public void add(int userId, Date time) {
         controller.executeQuery(
         "INSERT INTO shopping_cart (id, user_id, time, status) " +
-                "VALUES (DEFAULT, ?, ?, ?);",
-            Arrays.asList(userId, time, status.toString()));
+                "VALUES (DEFAULT, ?, ?, 'IN_CART');",
+            Arrays.asList(userId, time));
     }
 
     @Override
@@ -71,19 +71,10 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
     }
 
     @Override
-    public ShoppingCart find(String name) {
+    public ShoppingCart findActiveCartForUser(int userId) {
         List<ShoppingCart> shoppingCarts = executeQueryWithReturnValue(
-        "SELECT * FROM shopping_cart WHERE nane LIKE ?;",
-            Collections.singletonList(name));
-
-        return (shoppingCarts.size() != 0) ? shoppingCarts.get(0) : null;
-    }
-
-    @Override
-    public ShoppingCart findActiveCart() {
-        List<ShoppingCart> shoppingCarts = executeQueryWithReturnValue(
-        "SELECT * FROM shopping_cart WHERE status LIKE ?;",
-            Collections.singletonList("IN_CART"));
+        "SELECT * FROM shopping_cart WHERE user_id = ? AND status LIKE 'IN_CART';",
+            Collections.singletonList(userId));
 
         return (shoppingCarts.size() != 0) ? shoppingCarts.get(0) : null;
     }
