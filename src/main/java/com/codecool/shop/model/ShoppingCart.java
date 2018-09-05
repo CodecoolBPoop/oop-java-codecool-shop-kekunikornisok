@@ -36,15 +36,7 @@ public class ShoppingCart {
         return time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
     public ShoppingCartStatus getStatus() {
         return status;
-    }
-
-    public void setStatus(ShoppingCartStatus status) {
-        this.status = status;
     }
 }

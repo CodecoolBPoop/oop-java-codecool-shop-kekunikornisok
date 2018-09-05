@@ -15,10 +15,9 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/shopping-cart"})
 public class ShoppingCartController extends HttpServlet {
-    private ProductDao productDataStore = ProductDaoJDBC.getInstance();
-    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+    private ProductCategoryDao productCategory = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDao supplier = SupplierDaoJDBC.getInstance();
     private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
-    private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
     private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
 
     @Override
@@ -41,8 +40,8 @@ public class ShoppingCartController extends HttpServlet {
                 context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));
                 context.setVariable("totalItemNumber", shoppingCartProduct.getProductAmountInCart(activeCartId));
                 context.setVariable("totalPrice", shoppingCartProduct.getTotalPriceInCart(activeCartId));
-                context.setVariable("category", productCategoryDataStore.getAll());
-                context.setVariable("supplier", supplierDataStore.getAll());
+                context.setVariable("category", productCategory.getAll());
+                context.setVariable("supplier", supplier.getAll());
 
                 engine.process("cart/shopping_cart.html", context, resp.getWriter());
             }

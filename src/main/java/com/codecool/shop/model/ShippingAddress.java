@@ -2,23 +2,6 @@ package com.codecool.shop.model;
 
 public class ShippingAddress {
     private int userId;
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
     private String country;
     private String city;
     private String address;

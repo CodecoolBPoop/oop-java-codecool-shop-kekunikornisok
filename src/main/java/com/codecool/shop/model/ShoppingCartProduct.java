@@ -11,14 +11,6 @@ public class ShoppingCartProduct {
         this.amount = amount;
     }
 
-    public int getShoppingCartId() {
-        return shoppingCartId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
     public int getAmount() {
         return amount;
     }

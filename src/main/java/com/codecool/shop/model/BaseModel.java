@@ -8,10 +8,6 @@ public class BaseModel {
     protected String name;
     protected String description;
 
-    public BaseModel(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public BaseModel(int id, String name, String description) {
         this.id = id;

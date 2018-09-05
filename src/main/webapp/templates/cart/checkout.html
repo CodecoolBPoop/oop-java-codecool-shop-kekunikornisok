@@ -9,7 +9,7 @@
                         <div class="position-fixed p-2 border border-primary rounded checkout-cart">
                             <h4 class="d-flex justify-content-between align-items-center mb-3 text-white">
                                 Your cart
-                                <span class="badge badge-secondary badge-pill" th:text="${shopping_cart.getSize()}"></span>
+                                <span class="badge badge-secondary badge-pill" th:text="${totalItemNumber}"></span>
                             </h4>
                             <div id="checkout-cart-list">
                                 <ul class="list-group mb-3">
@@ -17,22 +17,22 @@
                                         th:each="product : ${products}">
                                         <div>
                                             <h6 class="my-0"
-                                                th:text="${product.getName()} + ' x ' + ${shopping_cart.getQuantityById(product.getId())}">
+                                                th:text="${product.get('name')} + ' x ' + ${product.get('amount')}">
                                                 Product name
                                             </h6>
                                             <small class="text-success"
-                                                   th:text="${product.getDescription()}">
+                                                   th:text="${product.get('description')}">
                                                 Brief description
                                             </small>
                                         </div>
-                                        <span class="text-success" th:text="'$' + ${product.getDefaultPrice()}">$12</span>
+                                        <span class="text-success" th:text="'$' + ${product.get('defaultPrice')}">$12</span>
                                     </li>
                                 </ul>
                             </div>
                             <ul class="list-group mb-3 mt-3">
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>Total (USD)</span>
-                                    <strong th:text="'$' + ${shopping_cart.getTotalPrice()}"></strong>
+                                    <strong th:text="'$' + ${totalPrice}"></strong>
                                 </li>
                             </ul>
 
