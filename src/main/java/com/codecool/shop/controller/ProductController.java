@@ -40,6 +40,7 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
+        context.setVariable("userId", session.getAttribute("userId"));
         context.setVariable("category", productCategory.getAll());
         context.setVariable("supplier", supplier.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));
@@ -65,8 +66,11 @@ public class ProductController extends HttpServlet {
         String categoryNameFromUrl = req.getParameter("category");
         String supplierNameFromUrl = req.getParameter("supplier");
 
-        shoppingCartProduct.addProductToShoppingCart(shoppingCart.findActiveCart().getId(), Integer.parseInt(req.getParameter("product")));
+        shoppingCartProduct.addProductToShoppingCart(
+                shoppingCart.findActiveCartForUser((Integer) session.getAttribute("userId")).getId(),
+                Integer.parseInt(req.getParameter("product")));
 
+        context.setVariable("userId", session.getAttribute("userId"));
         context.setVariable("category", productCategory.getAll());
         context.setVariable("supplier", supplier.getAll());
         context.setVariable("category_name", getCategoryImg(categoryNameFromUrl));

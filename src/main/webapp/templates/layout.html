@@ -35,8 +35,8 @@
         <nav th:fragment="layout" class="navbar navbar-light bg-dark">
             <div class="row">
                 <a class="navbar-brand" href="/">
-                    <img src="/static/img/cap-swirl.png" width="30" height="30" class="d-inline-block align-top ml-2" alt="">
-                    <span class="brand">intAirnet</span>
+                    <img src="/static/img/cap-swirl.png" width="70" height="70" class="d-inline-block align-top ml-2" alt="">
+                    <span class="brand display-4">intAirnet</span>
                 </a>
                 <div th:classappend="${userId == null} ? '' : 'd-none'" class="dropdown logged-out">
                     <button class="btn btn-info dropdown-toggle ml-2 mr-2" type="button" data-toggle="dropdown">
@@ -44,9 +44,9 @@
                     </button>
                     <div class="dropdown-menu">
                         <div class="col-1"></div>
-                        <div class="card m-5">
+                        <div class="card m-2">
                             <form id="register_form">
-                                <h1 class="dropdown-item text-center">Registration</h1>
+                                <h1 class="dropdown-item">Registration</h1>
                                 <div class="dropdown-item">
                                     <label for="email_register">Username:</label><br>
                                     <input id="email_register" name="register_register" type="text" required>
@@ -76,9 +76,9 @@
                     </button>
                     <div class="dropdown-menu">
                         <div class="col-1"></div>
-                        <div class="card m-5">
+                        <div class="card m-2">
                             <form id="login_form">
-                                <h1 class="dropdown-item text-center">Login</h1>
+                                <h1 class="dropdown-item">Login</h1>
                                 <div class="dropdown-item">
                                     <label for="email_login">Username:</label><br>
                                     <input id="email_login" name="email_login" type="text" required>

@@ -165,6 +165,7 @@ let dom = {
             $(".logged-out").toggleClass("d-none");
             $(".logged-in").toggleClass("d-none");
         }
+        window.location.href = "/";
     },
 
     billingAddressInfo: function (alertInfo) {

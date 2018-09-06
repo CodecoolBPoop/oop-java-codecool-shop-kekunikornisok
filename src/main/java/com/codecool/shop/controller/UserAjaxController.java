@@ -1,9 +1,12 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ShippingAddressDao;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.ShippingAddressDaoJDBC;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.UserDaoJDBC;
+import com.codecool.shop.model.ShoppingCartStatus;
 import com.codecool.shop.model.User;
 import com.google.gson.Gson;
 
@@ -13,11 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/handle-user"})
 public class UserAjaxController extends HttpServlet {
+    private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
     private UserDao userHandler = UserDaoJDBC.getInstance();
     private ShippingAddressDao shippingAddressHandler = ShippingAddressDaoJDBC.getInstance();
 
@@ -65,6 +70,7 @@ public class UserAjaxController extends HttpServlet {
                     newData.put("alertColor", "danger");
                     newData.put("alertMessage", "Email is already in use or your passwords do not match!");
                 }
+                shoppingCart.add(userHandler.find(req.getParameter("userEmail")).getId(), new java.sql.Date(new Date().getTime()));
                 break;
             case "login":
                 if (userHandler.validLogin(req.getParameter("userEmail"), req.getParameter("userPassword"))) {
@@ -92,6 +98,8 @@ public class UserAjaxController extends HttpServlet {
                         req.getParameter("zipCode"));
                 newData.put("alertColor", "success");
                 newData.put("alertMessage", "Save billing address!");
+                shoppingCart.changeCartStatus((Integer) req.getSession().getAttribute("userId"),
+                        ShoppingCartStatus.IN_CART, ShoppingCartStatus.CHECKED);
                 break;
             case "shipping":
                 if (shippingAddressHandler.getUserId().contains((Integer) req.getSession(false).getAttribute("userId"))) {
@@ -111,6 +119,8 @@ public class UserAjaxController extends HttpServlet {
                             req.getParameter("zipCode")
                     );
                 }
+                shoppingCart.changeCartStatus((Integer) req.getSession().getAttribute("userId"),
+                        ShoppingCartStatus.IN_CART, ShoppingCartStatus.CHECKED);
                 break;
         }
         String json = new Gson().toJson(newData);
