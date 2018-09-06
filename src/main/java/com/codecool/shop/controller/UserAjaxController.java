@@ -1,11 +1,14 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ShippingAddressDao;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.ShippingAddressDaoJDBC;
 import com.codecool.shop.dao.implementation.UserDaoJDBC;
 import com.codecool.shop.model.User;
 import com.google.gson.Gson;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
