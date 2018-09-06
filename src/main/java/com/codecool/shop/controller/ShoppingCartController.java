@@ -35,8 +35,10 @@ public class ShoppingCartController extends HttpServlet {
             if (session.getAttribute("userId") == null) {
                 resp.sendRedirect("/");
             } else {
-                int activeCartId = shoppingCart.findActiveCart().getId();
-                context.setVariable("userId", session.getAttribute("userId"));
+                int userId = (Integer) session.getAttribute("userId");
+                int activeCartId = shoppingCart.findActiveCartForUser(userId).getId();
+
+                context.setVariable("userId", userId);
                 context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));
                 context.setVariable("totalItemNumber", shoppingCartProduct.getProductAmountInCart(activeCartId));
                 context.setVariable("totalPrice", shoppingCartProduct.getTotalPriceInCart(activeCartId));

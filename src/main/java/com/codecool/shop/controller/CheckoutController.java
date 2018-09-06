@@ -47,6 +47,10 @@ public class CheckoutController extends HttpServlet {
                 context.setVariable("users", user);
                 context.setVariable("userId", session.getAttribute("userId"));
                 context.setVariable("shippingAddresses", shippingAddress.find((Integer) session.getAttribute("userId")));
+                int userId = (Integer) session.getAttribute("userId");
+                int activeCartId = shoppingCart.findActiveCartForUser(userId).getId();
+
+                context.setVariable("userId", userId);
                 context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));
                 context.setVariable("totalItemNumber", shoppingCartProduct.getProductAmountInCart(activeCartId));
                 context.setVariable("totalPrice", shoppingCartProduct.getTotalPriceInCart(activeCartId));

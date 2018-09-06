@@ -34,7 +34,8 @@ public class ShoppingCartAjaxController extends HttpServlet {
             } else {
                 Map<String, Integer> newData = new HashMap<>();
 
-                newData.put("totalItemsInCart", shoppingCartProduct.getProductAmountInCart(shoppingCart.findActiveCart().getId()));
+                newData.put("totalItemsInCart",
+                        shoppingCartProduct.getProductAmountInCart(shoppingCart.findActiveCartForUser((Integer) session.getAttribute("userId")).getId()));
                 String json = new Gson().toJson(newData);
 
                 resp.setContentType("application/json");
@@ -59,7 +60,7 @@ public class ShoppingCartAjaxController extends HttpServlet {
                 Map<String, Integer> newData = new HashMap<>();
 
                 int productId = Integer.parseInt(req.getParameter("id"));
-                int activeCartId = shoppingCart.findActiveCart().getId();
+                int activeCartId = shoppingCart.findActiveCartForUser((Integer) session.getAttribute("userId")).getId();
                 int newQuantity = 0;
 
                 if (req.getParameter("quantity").equals("decrease")) {

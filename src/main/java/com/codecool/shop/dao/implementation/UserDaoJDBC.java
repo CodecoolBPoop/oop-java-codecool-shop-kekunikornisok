@@ -145,6 +145,6 @@ public class UserDaoJDBC implements UserDao {
             return false;
         }
 
-        return user.getEmailAddress().equals(email) && user.getPassword().equals(password);
+        return (user != null) && (user.getEmailAddress().equals(email) && user.getPassword().equals(password));
     }
 }
