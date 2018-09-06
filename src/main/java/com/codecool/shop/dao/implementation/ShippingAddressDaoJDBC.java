@@ -3,6 +3,7 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ShippingAddressDao;
 import com.codecool.shop.jdbc.JDBCController;
 import com.codecool.shop.model.ShippingAddress;
+import com.codecool.shop.model.ShoppingCart;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -63,6 +64,14 @@ public class ShippingAddressDaoJDBC implements ShippingAddressDao {
         "INSERT INTO shipping_address (user_id, country, city, address, zip_code) " +
                 "VALUES (?, ?, ?, ?, ?);",
             Arrays.asList(userId, country, city, address, zipCode));
+    }
+
+    @Override
+    public List<ShippingAddress> find(int userId) {
+        return executeQueryWithReturnValue(
+                "SELECT * FROM shipping_address " +
+                        "WHERE user_id = ?",
+                Collections.singletonList(userId));
     }
 
     @Override
