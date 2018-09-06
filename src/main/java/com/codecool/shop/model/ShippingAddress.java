@@ -27,7 +27,7 @@ public class ShippingAddress {
                         "address: %4$s" +
                         "zipCode: %5$s",
 
-
+                this.userId,
                 this.country,
                 this.city,
                 this.address,
