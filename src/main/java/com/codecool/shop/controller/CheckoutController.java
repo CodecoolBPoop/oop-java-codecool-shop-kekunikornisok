@@ -3,7 +3,6 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.ShippingAddress;
 import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -24,7 +23,6 @@ public class CheckoutController extends HttpServlet {
     private UserDao userHandler = UserDaoJDBC.getInstance();
     private ShippingAddressDao shippingAddress = ShippingAddressDaoJDBC.getInstance();
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -40,15 +38,12 @@ public class CheckoutController extends HttpServlet {
             if (session.getAttribute("userId") == null) {
                 resp.sendRedirect("/");
             } else {
-                int activeCartId = shoppingCart.findActiveCart().getId();
                 User user = userHandler.find((Integer) session.getAttribute("userId"));
-
-
-                context.setVariable("users", user);
-                context.setVariable("userId", session.getAttribute("userId"));
-                context.setVariable("shippingAddresses", shippingAddress.find((Integer) session.getAttribute("userId")));
                 int userId = (Integer) session.getAttribute("userId");
                 int activeCartId = shoppingCart.findActiveCartForUser(userId).getId();
+
+                context.setVariable("users", user);
+                context.setVariable("shippingAddresses", shippingAddress.find((Integer) session.getAttribute("userId")));
 
                 context.setVariable("userId", userId);
                 context.setVariable("products", shoppingCartProduct.getShoppingCartProducts(activeCartId));

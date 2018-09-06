@@ -68,10 +68,16 @@ public class ShippingAddressDaoJDBC implements ShippingAddressDao {
 
     @Override
     public List<ShippingAddress> find(int userId) {
-        return executeQueryWithReturnValue(
-                "SELECT * FROM shipping_address " +
-                        "WHERE user_id = ?",
-                Collections.singletonList(userId));
+        List<ShippingAddress> shippingAddresses = executeQueryWithReturnValue(
+        "SELECT * FROM shipping_address " +
+                "WHERE user_id = ?",
+            Collections.singletonList(userId));
+
+        if (shippingAddresses.size() == 0) {
+            shippingAddresses.add(new ShippingAddress(userId, "", "", "", ""));
+        }
+
+        return shippingAddresses;
     }
 
     @Override

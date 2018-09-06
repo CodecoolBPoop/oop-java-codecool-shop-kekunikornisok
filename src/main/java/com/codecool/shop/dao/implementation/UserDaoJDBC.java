@@ -22,7 +22,7 @@ public class UserDaoJDBC implements UserDao {
         return instance;
     }
 
-    public List<User> executeQueryWithReturnValue(String query, List<Object> parameters) {
+    private List<User> executeQueryWithReturnValue(String query, List<Object> parameters) {
         Connection connection = controller.getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -90,11 +90,16 @@ public class UserDaoJDBC implements UserDao {
 
     @Override
     public User find(int id) {
-        List<User> users = executeQueryWithReturnValue(
+        User user = executeQueryWithReturnValue(
         "SELECT * FROM users WHERE id = ?;",
-            Collections.singletonList(id));
+            Collections.singletonList(id)).get(0);
 
-        return (users.size() != 0) ? users.get(0) : null;
+        if (user.getZipCode().equals("None")) {
+            return new User(id, user.getEmailAddress(), user.getPassword(),
+                    "","", "", "", "", "", false);
+        }
+
+        return user;
     }
 
     @Override
