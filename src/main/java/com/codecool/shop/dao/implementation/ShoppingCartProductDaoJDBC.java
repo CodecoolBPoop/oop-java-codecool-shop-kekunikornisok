@@ -145,8 +145,8 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
         try {
             preparedStatement = connection.prepareStatement(
             "SELECT SUM(amount * product.default_price ) AS total_price " +
-                "FROM shopping_cart_products JOIN product ON shopping_cart_products.product_id = product.id " +
-                "WHERE shopping_cart_id = ?;");
+                    "FROM shopping_cart_products JOIN product ON shopping_cart_products.product_id = product.id " +
+                    "WHERE shopping_cart_id = ?;");
 
             preparedStatement.setInt(1, shoppingCartId);
             resultSet = preparedStatement.executeQuery();
