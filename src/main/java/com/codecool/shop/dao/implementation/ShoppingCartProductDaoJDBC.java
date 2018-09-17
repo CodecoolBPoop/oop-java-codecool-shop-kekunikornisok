@@ -90,7 +90,7 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
         int newAmount;
 
         if (productAmount == 1) {
-            newAmount = controller.executeQueryWithIntReturnValue(
+            newAmount = controller. executeQueryWithIntReturnValue(
                     "DELETE FROM shopping_cart_products " +
                             "WHERE shopping_cart_id = ? AND product_id = ? " +
                             "RETURNING 0;",
@@ -165,6 +165,59 @@ public class ShoppingCartProductDaoJDBC implements ShoppingCartProductDao {
         }
 
         return data;
+    }
+
+    @Override
+    public List<Map<String, Object>> getOrderHistory(int userId) {
+        Connection connection = controller.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Map<String, Object>> resultList = new ArrayList<>();
+
+        try {
+            preparedStatement = connection.prepareStatement(
+                    "SELECT shopping_cart.time,SUM(shopping_cart_products.amount) as amount, " +
+                            "    SUM(product.default_price) as total_price " +
+                            "    FROM shopping_cart " +
+                            "    JOIN shopping_cart_products on shopping_cart.id = shopping_cart_id " +
+                            "    JOIN product on product_id = product.id " +
+                            "    WHERE user_id = ? " +
+                            "    GROUP BY shopping_cart.time;");
+
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("amount", resultSet.getInt("amount"));
+                data.put("time", resultSet.getString("time"));
+                data.put("totalPrice", resultSet.getString("total_price"));
+
+                resultList.add(data);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return resultList;
     }
 
     @Override

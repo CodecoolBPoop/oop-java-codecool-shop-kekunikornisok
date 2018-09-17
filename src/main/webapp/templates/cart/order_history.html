@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="layout.html :: layout"></div>
+<body>
+    <div class="container">
+        <table class="table table-striped m-4 shopping-cart-not-empty border border-dark">
+            <thead>
+            <tr>
+                <th scope="col">Items</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+            </thead>
+            <tbody th:each="orderItem : ${orderList}">
+                <tr>
+                    <td th:text="${orderItem.get('time')}">Item</td>
+                    <td th:text="${orderItem.get('amount')}"></td>
+                    <td th:text="${orderItem.get('totalPrice')}">Price</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
