@@ -39,6 +39,7 @@ public class OrderHistoryController extends HttpServlet {
                 resp.sendRedirect("/");
             } else {
                 context.setVariable("orderList", shoppingCartProduct.getOrderHistory((Integer) session.getAttribute("userId")));
+                context.setVariable("userId", session.getAttribute("userId"));
                 engine.process("cart/order_history.html", context, resp.getWriter());
             }
         }
