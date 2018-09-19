@@ -11,7 +11,7 @@ public interface UserDao {
     User find(int id);
     User find (String email);
     void remove(int id);
-    List<User> getAll(int id);
+    List<User> getAll();
     List<String> getEmails();
     boolean validRegister(String email, String password, String passwordConfirm);
     boolean validLogin(String email, String password);
