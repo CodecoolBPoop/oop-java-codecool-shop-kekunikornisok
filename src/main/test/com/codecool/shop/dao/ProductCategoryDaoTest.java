@@ -53,7 +53,7 @@ class ProductCategoryDaoTest {
     @Test
     void testFindInDatabaseWhenParameterIsInvalidInteger() {
         productCategory.add("Vitya", "az", "Isten");
-        assertNull(productCategory.find(10000));
+        assertNull(productCategory.find(Integer.MAX_VALUE));
     }
 
     @Test
@@ -84,7 +84,7 @@ class ProductCategoryDaoTest {
     @Test
     void testRemoveDataFromDatabaseWhenParameterIsNotPresent() {
         productCategory.add("Vitya", "az", "Isten");
-        productCategory.remove(10000);
+        productCategory.remove(Integer.MAX_VALUE);
         assertFalse(productCategory.getAll().isEmpty());
     }
 
