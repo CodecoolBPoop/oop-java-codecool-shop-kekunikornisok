@@ -119,11 +119,10 @@ public class UserDaoJDBC implements UserDao {
     }
 
     @Override
-    public List<User> getAll(int id) {
+    public List<User> getAll() {
         return executeQueryWithReturnValue(
-        "SELECT * FROM users " +
-                "WHERE id = ?",
-            Collections.singletonList(id));
+        "SELECT * FROM users;",
+            Collections.emptyList());
     }
 
     @Override
