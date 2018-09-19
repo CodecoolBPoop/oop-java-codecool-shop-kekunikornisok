@@ -55,7 +55,7 @@ class UserDaoTest {
         user.add("Vitya", "Vitya");
         user.setTable(1,"", "Isten", "Lölö", "a", "jobb",
                 "keze");
-        assertEquals("Vitya", user.find(1).getFirstName());
+        assertEquals("", user.find(1).getFirstName());
     }
 
     @Test
