@@ -13,5 +13,7 @@ public interface ShoppingCartProductDao {
 
     float getTotalPriceInCart(int shoppingCartId);
 
+    List<Map<String, Object>> getOrderHistory(int shoppingCartId);
+
     List<Map<String, Object>> getShoppingCartProducts(int shoppingCartId);
 }
