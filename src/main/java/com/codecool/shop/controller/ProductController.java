@@ -4,6 +4,8 @@ import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -22,6 +24,8 @@ public class ProductController extends HttpServlet {
     private SupplierDao supplier = SupplierDaoJDBC.getInstance();
     private ShoppingCartDao shoppingCart = ShoppingCartDaoJDBC.getInstance();
     private ShoppingCartProductDao shoppingCartProduct = ShoppingCartProductDaoJDBC.getInstance();
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -92,8 +96,10 @@ public class ProductController extends HttpServlet {
 
     private String getCategoryImg (String categoryNameFromUrl) {
         if (categoryNameFromUrl != null) {
+            logger.info("Background image");
             return categoryNameFromUrl;
         } else {
+            logger.info("Default background image");
             return "Cloud";
         }
     }
