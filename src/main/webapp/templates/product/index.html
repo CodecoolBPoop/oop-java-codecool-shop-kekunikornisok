@@ -2,8 +2,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <div th:replace="layout.html :: layout"></div>
     <body>
-        <div class="jumbotron">
-            <img class="group category-image responsive" th:attr="src='/static/img/' + ${category_name} + '.jpg'" alt="" />
+        <div id="wrapper">
+            <img th:attr="src='/static/img/' + ${category_name} + '.jpg'" alt="" />
         </div>
         <div class="container">
             <div id="products" class="row">
